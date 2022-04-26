@@ -1,0 +1,119 @@
+body {
+  height: 100vh;
+  background: linear-gradient(to top right, #426777, #8aa8b5);
+}
+
+.seq-input {
+  width: 1000px;
+  height: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.input-box {
+  width: 500px;
+  height: 50px;
+  font-size: medium;
+  border-radius: 25px;
+  border: none;
+  background-color: rgb(217, 240, 249);
+  padding: 10px;
+}
+
+.order-screen {
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-title {
+  color: white;
+  font-weight: bold;
+}
+
+.submit-button {
+  height: 50px;
+  width: 200px;
+  margin-top: 2vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.submitButton {
+  width: 100px;
+  height: 50px;
+  font-size: medium;
+  font-weight: bold;
+  color: white;
+  background-color: #9b3c37;
+  outline: none;
+  border: none;
+}
+
+.rb-container {
+  width: 300px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+/* .rb-container label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 10px;
+  left: 7px;
+  opacity: 0;
+  transform: rotate(-45deg);
+  width: 12px;
+} */
+
+/* .rb-container input[type="checkbox"]:checked + label {
+  background-color: #66bb6a;
+  border-color: #66bb6a;
+} */
+
+/* /* .round input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+} */
+
+.round-btn {
+  background-color: rgb(217, 240, 249);
+  border: none;
+  height: 28px;
+  width: 28px;
+  clip-path: circle(46% at 50% 50%);
+  accent-color: green;
+}
+
+.round-buttons {
+  /* width: 250px; */
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  color: #9b3c37;
+  font-weight: bold;
+}
+
+.output-title {
+  color: white;
+  font-weight: bold;
+  margin-top: 10vh;
+}
+
+.results-box {
+  background-color: rgb(217, 240, 249);
+  height: 200px;
+  width: 700px;
+  border-radius: 25px;
+  padding: 15px;
+  color: #9b3c37;
+}
