@@ -3,19 +3,19 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 
 # Sequence class for input genetic sequences
 class Sequence:
-    def	__init__(self, name, num_strands):
+    def	__init__(self, name, type):
         self.name = name.upper()
         self.assembly_cost = []
         self.company_cost = []
         self.turn_time = 0
-        self.gc_content = self.get_gc_content()
-        self.num_strands = num_strands
+        self.gc_content = 0
+        self.type = type
         self.tm = -273.15 #sequence melting point
-        
+
         self.fold_score = 0
         self.parts = []
-        
-        
+
+
     def get_gc_content(self):
         c_content = self.name.count('C')
         g_content = self.name.count('G')
@@ -33,6 +33,3 @@ class Sequence:
         helix_perc, turn_perc, sheet_perc = analyzed_seq.secondary_structure_fraction()
 
         self.fold_score = helix_perc + turn_perc + sheet_perc
-        
-
-    

@@ -1,29 +1,27 @@
 import React, { useEffect, useState, Component } from "react";
 import { useNavigate } from "react-router-dom";
 
-async function getCompanies() {
-  let url = "http://localhost:8000/company";
-  try {
-    let res = await fetch(url);
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 async function renderCompanies(users) {
   {
-    users && users.map((user) => console.log(user.CompanyName));
+    console.log(users.CompanyName);
+    console.log(users.Price);
   }
 }
 
 function Button() {
   //   state = {};
   //   render() {
+  var data = JSON.stringify({
+    "Sequence":"atgctcccaaacgatgaatggctccgtgataaccagccgtaaacttctctggaagcttcacattggagattggcaatcacggtctcattatttctctcacatgcgaaagttcatgtctactaacagttcttctaactcaagacaaacgatgtattacagactgacaggaggatgagctacagcttgactcgaaaatagctagccacccaccgacatatctgatacgccgcgtatcaaacgtctcgtgaggcggcacgcactgaatgtattgggtggagttattacatctagtatggggtgggcctagtccttaagcactacatcagttaggcggctttacgggggaaccccgatcctcccttgtaggaactcagcatctcggcgcagggtggtcaggtatcttcctgtacgggcaggactttgtattcgtaccaacgaccgtttgtattactgtctattggcctgagggcccgcactcgcctcttgctgcgttgggggatgcaacggtggccggccgactataatcagccgcggaatccgattcgagagagataaaatggtggcgcttaccgcttccttaggccctgttggcgatggagggacagtacaagatgtaccggataattggccatgtactacacggcaacgtatatatgtaaagccagtgggatagcacgcccgtcctattcaactaccgaaattaaaatagatgctcgtcctaaaaatgggaatgacacggggaatgccgaacatcattgcgtccaggtcgcggcgtcgcaaccgagactctgctgtttgaaacgagtaagcgcgctattatacgtgccaattttcgcttttggtatccgcttttgaggcccgcctggatacgctaacctggcctggaggtagggtataaactccggagaatgtgggtgtcgatcattaggaatctccaatcttgtaacaatgaccccccagacgtcgatatactttgacagcgcttcgagtattagtaacc",
+    "Type":"DNA",
+    "dsDNA":"Yes"
+});
+  var head = { "Content-Type" : "application/json" };
   let navigate = useNavigate();
   const [users, setUsers] = useState();
   const getApiData = async () => {
-    const response = await fetch("http://localhost:8000/company").then(
+    const response = await fetch("http://localhost:8000/company", { method: "POST", headers: head, body: data }).then(
       (response) => response.json()
     );
     setUsers(response);
