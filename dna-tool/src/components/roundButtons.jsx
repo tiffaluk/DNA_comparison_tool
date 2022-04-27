@@ -3,7 +3,7 @@ import RoundButton from "./roundbutton";
 
 class RoundButtons extends Component {
   state = {
-    inputTypes: ["DNA", "RNA", "Amino Acids"],
+    inputTypes: ["ssDNA", "dsDNA", "RNA", "Amino Acids"],
   };
   render() {
     return (
