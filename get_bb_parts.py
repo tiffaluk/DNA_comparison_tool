@@ -13,7 +13,4 @@ def get_bb_parts(self):
 	else
 		cost_penalty = 0
 
-	
-
-
-return cost_penalty
+	self.assembly_cost[1] = cost_penalty

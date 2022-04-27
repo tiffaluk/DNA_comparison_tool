@@ -1,5 +1,6 @@
 def get_gib_parts:
+	#check for sequence repeats
 
 
 
-return cost_penalty
+	self.assembly_cost[2] = cost_penalty

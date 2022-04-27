@@ -14,5 +14,5 @@ def get_gg_parts(self):
 		cost_penalty = float('inf')
 	else:
 		cost_penalty = 0
-			
-	return cost_penalty
+
+	self.assembly_cost[3] = cost_penalty
