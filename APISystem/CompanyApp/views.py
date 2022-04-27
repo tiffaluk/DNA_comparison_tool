@@ -5,12 +5,13 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 from CompanyApp.models import Company
 from CompanyApp.serializers import CompanySerializer
-
+# from blahblah import function
 @csrf_exempt
 
 def companyAPI(request,id=0):
     if request.method=='GET':
         companies = Company.objects.all()
+        # bestCompany=function(request.Sequence, companies )
         companies_serializer=CompanySerializer(companies,many=True)
         return JsonResponse(companies_serializer.data, safe=False)
     elif request.method=='POST':
