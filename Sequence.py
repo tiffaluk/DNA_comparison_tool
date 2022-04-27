@@ -30,5 +30,9 @@ class Sequence:
 
     def get_folding_score(self):
         analyzed_seq = ProteinAnalysis(self.name)
-        analyzed_seq.secondary_structure_fraction()
+        helix_perc, turn_perc, sheet_perc = analyzed_seq.secondary_structure_fraction()
 
+        self.fold_score = helix_perc + turn_perc + sheet_perc
+        
+
+    

@@ -24,4 +24,7 @@ seq = Sequence.Sequence(seq_txt, 1)
 
 seq.get_gc_content()
 print(seq.gc_content)
+
+seq.get_folding_score()
+print(seq.fold_score)
 # %%
