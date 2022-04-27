@@ -9,7 +9,11 @@ class RoundButtons extends Component {
     return (
       <div className="round-buttons">
         {this.state.inputTypes.map((inputType) => (
-          <RoundButton inputType={inputType} key={inputType} />
+          <RoundButton
+            inputType={inputType}
+            key={inputType}
+            onChange={this.props.onChange}
+          />
         ))}
       </div>
     );

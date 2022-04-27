@@ -15,7 +15,12 @@ class RoundButton extends Component {
     return (
       <div className="rb-container" onChange={this.onChangeValue}>
         <label> {this.state.inputType} </label>
-        <input type="radio" className="round-btn" name="input-type" />
+        <input
+          type="radio"
+          className="round-btn"
+          name="input-type"
+          onClick={() => this.props.onChange(this.state.inputType)}
+        />
       </div>
     );
   }

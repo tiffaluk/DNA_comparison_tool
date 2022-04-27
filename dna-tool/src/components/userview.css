@@ -103,6 +103,14 @@ body {
   font-weight: bold;
 }
 
+.result-container-visible {
+  visibility: visible;
+}
+
+.result-container-hidden {
+  visibility: hidden;
+}
+
 .output-title {
   color: white;
   font-weight: bold;
