@@ -1,5 +1,7 @@
+biopython
 django
 djangorestframework
 django-cors-headers
 djongo
 dnspython
+
