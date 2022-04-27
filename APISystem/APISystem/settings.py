@@ -59,7 +59,7 @@ path = "/home"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(path, "User/Desktop/EC552Project/APISysten", "testing.html")],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

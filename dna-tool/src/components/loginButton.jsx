@@ -14,7 +14,7 @@ function LoginButton() {
   let navigate = useNavigate();
   // render() {
   return (
-    <div class="login-button">
+    <div className="login-button">
       <button
         type="submit"
         className="login-page"
