@@ -1,8 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Abel");
-body {
-  height: 100vh;
-  background: linear-gradient(to top right, #426777, #8aa8b5);
-}
 
 .company-screen {
   justify-content: center;

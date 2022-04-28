@@ -143,9 +143,10 @@ body {
   justify-content: flex-end;
   display: flex;
   align-items: center;
-  width: 95vw;
+  width: 80vw;
   margin-right: -20px;
   margin-top: 0px;
+  margin-bottom: 115px;
   visibility: visible;
   color: #9b3c37;
 }
