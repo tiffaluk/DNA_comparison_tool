@@ -4,7 +4,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginScreen from "./screens/loginScreen";
 import OrderScreen from "./screens/orderScreen";
-import ResultScreen from "./screens/resultScreen";
+import CompanyScreen from "./screens/companyScreen";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<LoginScreen />} />
         <Route exact path="/order" element={<OrderScreen />} />
-        <Route exact path="/result" element={<ResultScreen />} />
+        <Route exact path="/company" element={<CompanyScreen />} />
       </Routes>
     </Router>
   );

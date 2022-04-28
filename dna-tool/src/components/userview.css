@@ -53,6 +53,7 @@ body {
   background-color: #9b3c37;
   outline: none;
   border: none;
+  cursor: pointer;
 }
 
 .rb-container {
@@ -91,6 +92,7 @@ body {
   width: 28px;
   clip-path: circle(46% at 50% 50%);
   accent-color: green;
+  cursor: pointer;
 }
 
 .round-buttons {
@@ -115,13 +117,63 @@ body {
   color: white;
   font-weight: bold;
   margin-top: 10vh;
+  display: flex;
+  justify-content: center;
 }
 
 .results-box {
   background-color: rgb(217, 240, 249);
-  height: 200px;
+  height: 180px;
   width: 700px;
   border-radius: 25px;
   padding: 15px;
   color: #9b3c37;
+}
+
+.home-button {
+  background-color: transparent;
+  border: none;
+  color: #9b3c37;
+  display: flex;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.home-button-container {
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  width: 95vw;
+  margin-left: -20px;
+  margin-top: 0px;
+}
+
+.more-button {
+  background-color: transparent;
+  border: none;
+  color: #9b3c37;
+  display: flex;
+  align-self: flex-end;
+  font-weight: bold;
+  align-items: center;
+  cursor: pointer;
+  visibility: visible;
+}
+
+.more-button-container-visible {
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  width: 95vw;
+  margin-right: -20px;
+  margin-top: 0px;
+  visibility: visible;
+}
+
+.more-button-container-hidden {
+  visibility: hidden;
+}
+
+.more-button-hidden {
+  visbility: hidden;
 }

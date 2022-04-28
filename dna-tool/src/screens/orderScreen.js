@@ -3,22 +3,20 @@ import SequenceInput from "../components/sequenceInput";
 import Button from "../components/button";
 import RoundButtons from "../components/roundButtons";
 import ResultsBox from "../components/resultsBox";
+import { HomeButton, MoreButton } from "../components/iconButton";
 
 class OrderScreen extends Component {
   state = {
     inSeq: "",
     inType: "",
     v: "result-container-hidden",
-    users: {
-      CompanyName: "",
-      Price: 0.0
-    }
+    v2: "more-button-hidden",
   };
 
   handleSubmit = (users) => {
     const v = "result-container-visible";
-
-    this.setState({ v, users });
+    const v2 = "more-button";
+    this.setState({ v, v2 });
 
     console.log("Handled submit");
   };
@@ -34,6 +32,7 @@ class OrderScreen extends Component {
   render() {
     return (
       <div className="order-screen">
+        <HomeButton />
         <h1 className="input-title">Please Input Sequence</h1>
         <SequenceInput onChange={this.handleSeqChange} />
         <RoundButtons onChange={this.handleTypeChange} />
@@ -42,7 +41,8 @@ class OrderScreen extends Component {
           inType={this.state.inType}
           onSubmit={this.handleSubmit}
         />
-        <ResultsBox visibility={this.state.v} users = {this.state.users}/>
+        <ResultsBox visibility={this.state.v} />
+        <MoreButton visibility={this.state.v2} />
       </div>
     );
   }
