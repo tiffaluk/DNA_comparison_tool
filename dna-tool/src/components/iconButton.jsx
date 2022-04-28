@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FaHome } from "react-icons/fa";
 import { MdReadMore } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import "./userview.css";
 
 export function HomeButton() {
   //   state = {
@@ -31,7 +32,7 @@ export function MoreButton() {
   let navigate = useNavigate();
 
   return (
-    <div className="more-button-container">
+    <div className="more-button-container-visible">
       <button
         type="submit"
         className="more-button"

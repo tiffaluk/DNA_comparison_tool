@@ -64,27 +64,6 @@ body {
   display: flex;
 }
 
-/* .rb-container label:after {
-  border: 2px solid #fff;
-  border-top: none;
-  border-right: none;
-  content: "";
-  height: 10px;
-  left: 7px;
-  opacity: 0;
-  transform: rotate(-45deg);
-  width: 12px;
-} */
-
-/* .rb-container input[type="checkbox"]:checked + label {
-  background-color: #66bb6a;
-  border-color: #66bb6a;
-} */
-
-/* /* .round input[type="checkbox"]:checked + label:after {
-  opacity: 1;
-} */
-
 .round-btn {
   background-color: rgb(217, 240, 249);
   border: none;
@@ -96,7 +75,6 @@ body {
 }
 
 .round-buttons {
-  /* width: 250px; */
   flex-direction: row;
   display: flex;
   justify-content: center;
@@ -132,7 +110,7 @@ body {
 
 .home-button {
   background-color: transparent;
-  border: none;
+  border: #9b3c37;
   color: #9b3c37;
   display: flex;
   align-self: flex-end;
@@ -158,6 +136,7 @@ body {
   align-items: center;
   cursor: pointer;
   visibility: visible;
+  box-shadow: none;
 }
 
 .more-button-container-visible {
@@ -168,6 +147,7 @@ body {
   margin-right: -20px;
   margin-top: 0px;
   visibility: visible;
+  color: #9b3c37;
 }
 
 .more-button-container-hidden {

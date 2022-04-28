@@ -1,16 +1,33 @@
 @import url("https://fonts.googleapis.com/css?family=Abel");
-
-/* html,
 body {
-  background: #fceeb5;
-  font-family: Abel, Arial, Verdana, sans-serif;
-} */
+  height: 100vh;
+  background: linear-gradient(to top right, #426777, #8aa8b5);
+}
+
+.company-screen {
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.company-cards {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  align-items: flex-start;
+  justify-content: center;
+  display: flex;
+  color: white;
+  font-weight: bold;
+}
 
 .center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 100%;
 }
 
 .card {
@@ -33,7 +50,7 @@ body {
   position: absolute;
   width: 150px;
   height: 100%;
-  background: linear-gradient(#de685e, #ee786e);
+  background: linear-gradient(#9b3c37, #ee786e);
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
@@ -168,27 +185,29 @@ body {
   box-sizing: border-box;
   padding: 1rem;
   padding-top: 0;
+  font-weight: bold;
 }
 
 .card .general .more {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  font-size: 0.9em;
+  font-size: 0.7em;
+  color: #9b3c37;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 .container {
-  width: 100%;
-  height: 100px;
+  width: 100vw;
+  height: 100vh;
   background: #fceeb5;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-button {
+/* button {
   width: 270px;
   height: 80px;
   border: none;
@@ -202,7 +221,7 @@ button {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-}
+} */
 
 .check-box {
   width: 80px;
