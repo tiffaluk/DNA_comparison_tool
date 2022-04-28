@@ -151,11 +151,11 @@ class Sequence:
         count = 0
         for i in range(len(bb_lib_np)):
             m = []
-            [m.start() for m in re.finditer(bb_lib_np[i], total_seq)]
+            [m.start() for m in re.finditer(bb_lib_np[i][1], total_seq)]
             for j in range(len(m)):
                 count = count + 1
-                self.bb_parts.append(bb_lib_np[i])
-                for k in range(len(bb_lib_np[i])):
+                self.bb_parts.append(bb_lib_np[i][1])
+                for k in range(len(bb_lib_np[i][1])):
                     total_seq[j + k] = "_"
         self.assembly_cost[0] = self.assembly_cost[0] + len(self.bb_parts) * 5
 
