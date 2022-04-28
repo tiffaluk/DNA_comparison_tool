@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./companydetailsview.css";
+import { IoBusiness } from "react-icons/io5";
 
 class CompanyCard extends Component {
   state = {
@@ -12,13 +13,10 @@ class CompanyCard extends Component {
     sequencelength: this.props.company.sequencelength,
     lengthpriceincrease: this.props.company.lengthpriceincrease,
     gccontent: this.props.company.gccontent,
-    gcpriceincrease:this.props.company.gcpriceincrease,
-    foldingscore:this.props.company.foldingscore,
-    foldingpriceincrease:this.props.company.foldingpriceincrease,
-    aminoacid:this.props.company.aminoacid,
-
-
-
+    gcpriceincrease: this.props.company.gcpriceincrease,
+    foldingscore: this.props.company.foldingscore,
+    foldingpriceincrease: this.props.company.foldingpriceincrease,
+    aminoacid: this.props.company.aminoacid,
   };
 
   render() {
@@ -26,8 +24,11 @@ class CompanyCard extends Component {
       <div className="center">
         <div className="card">
           <div className="additional">
+            {/* <i>
+              <IoBusiness size="5em" />
+            </i> */}
             <div className="user-card">
-              <svg
+              {/* <svg
                 width="110"
                 height="110"
                 viewBox="0 0 250 250"
@@ -38,14 +39,14 @@ class CompanyCard extends Component {
               >
                 <defs>
                   <clipPath id="scene">
-                    <circle cx="125" cy="125" r="115" />
+                    <circle cx="130" cy="125" r="115" />
                   </clipPath>
                 </defs>
-                <circle cx="125" cy="125" r="120" fill="rgba(0,0,0,0.15)" />
+                <circle cx="130" cy="125" r="120" fill="rgba(0,0,0,0)" />
                 <g stroke="none" strokeWidth="0" clipPath="url(#scene)">
                   <rect x="0" y="0" width="250" height="250" fill="#b0d2e5" />
                 </g>
-              </svg>
+              </svg> */}
             </div>
             <div className="more-info">
               <h1 id="name"></h1>
@@ -60,7 +61,7 @@ class CompanyCard extends Component {
                   {"Cost Penalties: " + this.state.costpenalty}
                   <label id="costPenalty"></label>
                 </span>
-            </div>
+              </div>
               <div className="coords">
                 <span>
                   {"Sequence Length:  " + this.state.sequencelength}

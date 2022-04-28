@@ -14,6 +14,7 @@ class OrderScreen extends Component {
     users: {
       CompanyName: "",
       Price: 0.0,
+      AssemblyMethod:" "
     },
   };
 

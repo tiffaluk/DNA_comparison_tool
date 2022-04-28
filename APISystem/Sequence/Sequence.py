@@ -44,11 +44,11 @@ class Sequence:
                 }
             self.name = ""
             for i in range(len(name)):
-                self.name += prot_table[name[i]] 
+                self.name += prot_table[name[i]]
 
         self.type = type
 
-        
+
         self.gc_content = 0
         self.get_gc_content()
 
@@ -63,9 +63,9 @@ class Sequence:
         self.gibson_parts = []
 
         #0 is biobrick, 1 is goldengate, 2 is gibson
-        self.turn_time = [0] * 0
-        self.assembly_cost = [0] * 1
-        self.company_cost = [0] * 2
+        self.turn_time = [0,0,0,0]
+        self.assembly_cost = [0,0,0,0]
+        self.company_cost = [0,0,0,0]
 
         self.check_bb()
         self.check_gg()
@@ -99,7 +99,7 @@ class Sequence:
 
         if any(res_site in self.name for res_site in res_sites):
             self.assembly_cost[0] = float('inf')
-            self.turn_time[0] = float('inf')
+            self.turn_time[0]= float('inf')
             return
 
         self.get_bb_parts()
@@ -201,7 +201,7 @@ class Sequence:
             if new_max_len < old_max_len:
                 self.get_gg_parts()
             else:
-                return 
+                return
 
     def get_gibson_parts(self):
         #parts can be 500 bp to 32 kb long
@@ -215,13 +215,15 @@ class Sequence:
             self.turn_time = 30
             self.assembly_cost
         elif len(self.name) < 1500:
-            num_parts = 
+            num_parts =
         '''
 
         self.gibson_parts = [self.name[i:i+num_parts] for i in range(0, len(self.name), num_parts)]
         self.turn_time[2] = 80 + 30 * len(self.gibson_parts)
+
+        self.turn_time[2] = 80
         self.assembly_cost[2] = 30*len(self.gibson_parts)
-        
+
 
 
 
@@ -229,9 +231,10 @@ class Sequence:
         min_assembly_cost = min(self.assembly_cost)
         min_assembly_index = self.assembly_cost.index(min_assembly_cost)
 
-        min_turn_time = min(self.turn_time)
-        min_turn_index = self.turn_time.index(min_turn_time)
-
+        #min_turn_time = min(self.turn_time)
+        #min_turn_index = self.turn_time.index(min_turn_time)
+        assembly_method_index=1
+        assembly_method=""
         if min_assembly_index == 0:
             assembly_method = "BioBrick"
         elif min_assembly_index == 1:

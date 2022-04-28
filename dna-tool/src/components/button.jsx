@@ -39,8 +39,17 @@ function Button(props) {
         }
       }
     }
+    // this.setState({
+    //   a:{
+    //     ...a
+    //   }
+    // })
+    a={
+      ...a,
+      "AssemblyMethod":" ",
+    }
+    console.log(a);
     localStorage.setItem("prices",JSON.stringify(d));
-    console.log(d)
     props.onSubmit(a);
   };
 

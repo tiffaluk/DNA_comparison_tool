@@ -44,13 +44,14 @@
 }
 
 .card .additional {
-  position: absolute;
+  position: relative;
   width: 150px;
   height: 100%;
   background: linear-gradient(#9b3c37, #ee786e);
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
+  color: white;
 }
 
 .card.green .additional {
