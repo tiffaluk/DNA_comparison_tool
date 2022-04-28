@@ -144,6 +144,7 @@ class Sequence:
 
     # Split desired dna sequence into possible parts for assembly
     def get_bb_parts(self):
+        '''
         total_seq = self.name
         biobrick_df = pd.read_csv('biobrick_library.csv')
         bb_lib_np = biobrick_df.to_numpy()
@@ -166,6 +167,7 @@ class Sequence:
         self.turn_time[0] = self.turn_time[0] + 30*len(total_seq_remain)
 
         count = count + len(total_seq_remain)
+        '''
 
 
     def get_gg_parts(self):
