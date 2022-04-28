@@ -9,7 +9,18 @@ class CompanyCard extends Component {
     assembly: this.props.company.assembly,
     pricebp: this.props.company.pricebp,
     costpenalty: this.props.company.costpenalty,
+    sequencelength: this.props.company.sequencelength,
+    lengthpriceincrease: this.props.company.lengthpriceincrease,
+    gccontent: this.props.company.gccontent,
+    gcpriceincrease:this.props.company.gcpriceincrease,
+    foldingscore:this.props.company.foldingscore,
+    foldingpriceincrease:this.props.company.foldingpriceincrease,
+    aminoacid:this.props.company.aminoacid,
+
+
+
   };
+
   render() {
     return (
       <div className="center">
@@ -31,7 +42,7 @@ class CompanyCard extends Component {
                   </clipPath>
                 </defs>
                 <circle cx="125" cy="125" r="120" fill="rgba(0,0,0,0.15)" />
-                <g stroke="none" stroke-width="0" clip-path="url(#scene)">
+                <g stroke="none" strokeWidth="0" clipPath="url(#scene)">
                   <rect x="0" y="0" width="250" height="250" fill="#b0d2e5" />
                 </g>
               </svg>
@@ -49,6 +60,48 @@ class CompanyCard extends Component {
                   {"Cost Penalties: " + this.state.costpenalty}
                   <label id="costPenalty"></label>
                 </span>
+            </div>
+              <div className="coords">
+                <span>
+                  {"Sequence Length:  " + this.state.sequencelength}
+                  <label id="priceBp"></label>
+                </span>
+              </div>
+              <div className="coords">
+                <span>
+                  {"  Price Increase:  " + this.state.lengthpriceincrease}
+                  <label id="priceBp"></label>
+                </span>
+              </div>
+              <div className="coords">
+                <span>
+                  {"G_C Content:  " + this.state.gccontent}
+                  <label id="priceBp"></label>
+                </span>
+              </div>
+              <div className="coords">
+                <span>
+                  {"Price Increase:  " + this.state.gcpriceincrease}
+                  <label id="priceBp"></label>
+                </span>
+              </div>
+              <div className="coords">
+                <span>
+                  {"Folding Limit:  " + this.state.foldingscore}
+                  <label id="priceBp"></label>
+                </span>
+              </div>
+              <div className="coords">
+                <span>
+                  {"Price Increase:  " + this.state.foldingpriceincrease}
+                  <label id="priceBp"></label>
+                </span>
+              </div>
+              <div className="coords">
+                <span>
+                  {"Amino Acids:  " + this.state.aminoacid}
+                  <label id="priceBp"></label>
+                </span>
               </div>
             </div>
           </div>
@@ -61,7 +114,7 @@ class CompanyCard extends Component {
               <label id="companyName"></label>
             </p>
             <p>
-              {"Price: " + this.state.price}
+              {"Price($USD): " + this.state.price}
               <label id="price"></label>
             </p>
             <p>

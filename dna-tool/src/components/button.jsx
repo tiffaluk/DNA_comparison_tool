@@ -23,19 +23,31 @@ function Button(props) {
 
   const getApiData = async () => {
     const response = await fetch("http://localhost:8000/company", {
-      method: "PUT",
+      method: "DELETE",
       headers: head,
       body: data,
     });
     const d = await response.json();
-    console.log(d);
-    props.onSubmit(d);
+    const bestIndex=0;
+    const bestPrice=Math.pow(10, 1000); //
+    var a=d[0];
+    for (let step = 0; step < 4; step++) {
+      if(d[step].Price<bestPrice){
+        if(d[step].Price>0){
+          a=d[step];
+        }
+      }
+    }
+    localStorage.setItem("prices",JSON.stringify(d));
+    console.log(d)
+    props.onSubmit(a);
   };
 
   // useEffect(() => {
   //   getApiData();
   // }, []);
   return (
+
     <div className="submit-button">
       <button
         type="submit"

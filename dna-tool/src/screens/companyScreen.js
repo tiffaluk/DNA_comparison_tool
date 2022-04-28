@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CompanyCards from "../components/companyCards";
 import { HomeButton } from "../components/iconButton";
-
+import SequenceInput from "../components/sequenceInput";
 class CompanyScreen extends Component {
   state = {};
   render() {

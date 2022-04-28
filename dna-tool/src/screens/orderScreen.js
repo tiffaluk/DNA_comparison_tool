@@ -4,7 +4,7 @@ import Button from "../components/button";
 import RoundButtons from "../components/roundButtons";
 import ResultsBox from "../components/resultsBox";
 import { HomeButton, MoreButton } from "../components/iconButton";
-
+import CompanyCards from "../components/companyCards";
 class OrderScreen extends Component {
   state = {
     inSeq: "",
@@ -48,6 +48,7 @@ class OrderScreen extends Component {
         <ResultsBox visibility={this.state.v} users={this.state.users} />
         <MoreButton />
       </div>
+
     );
   }
 }

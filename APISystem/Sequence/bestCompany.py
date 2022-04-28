@@ -9,6 +9,7 @@ class DecimalEncoder(json.JSONEncoder):
 def BestCompany(Sequence,Companies):
     bestPrice = float('inf')
     bestCompany=""
+
     for company in Companies.iterator():
 
         if(Sequence.type=="Amino Acids"):
@@ -26,10 +27,44 @@ def BestCompany(Sequence,Companies):
 
     return json.dumps(value,cls=DecimalEncoder)
 
+def AllCompany(Sequence,Companies):
+    bestPrice = float('inf')
+    bestCompany=""
+    list=[]
+    Sequence.get_gc_content()
+    Sequence.get_folding_score()
+    test={
+        "SequenceLength": len(Sequence.name),
+        "GC_Content":Sequence.gc_content,
+        "Folding_Score":Sequence.fold_score
+    }
+    list.append(test)
+    for company in Companies.iterator():
+        overLengthThreshold=False
+        overLengthMax=False
+        overGC_Content=False
+        overGC_Max=False
+        overFoldingScore=False
+        if(Sequence.type=="Amino Acids"):
+            if(company.AminoAcidSequence==True):
+                currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
+        else:
+            currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScoree=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
+        value = {
+            "CompanyName":company.CompanyName,
+            "Price" : currentPrice,
+            "overLengthThreshold":overLengthThreshold,
+            "overLengthMax":overLengthMax,
+            "overGC_Content":overGC_Content,
+            "overGC_Max":overGC_Max,
+            "overFoldingScore":overFoldingScore
+            }
+        list.append(value)
 
 
-def PriceofCompany(Sequence,company):
-    print(company.CompanyName)
+    return json.dumps(list,cls=DecimalEncoder)
+
+def PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore):
     currentsequence=Sequence.name
     Sequence.get_gc_content()
     gc_content=Sequence.gc_content
@@ -39,21 +74,24 @@ def PriceofCompany(Sequence,company):
     homology_score=Sequence.fold_score
     price=company.Price_Per_BP
     if((lengthofsequence>company.BP_Length_Maximum) or (lengthofsequence<company.BP_Length_Minimum)):
-        return -1
+        price=-1
+        overLengthMax=True
+        return price,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore
     elif ((lengthofsequence>company.BP_Length_Threshold) and (lengthofsequence<company.BP_Length_Maximum)):
-        #print('hit bp')
+        overLengthThreshold=True
         price=price+company.BP_Length_PriceIncrease
     if(gc_content>company.GC_Content_Maximum):
-        return -1
+        price=-1
+        overGC_Max=True
+        return price,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore
     elif ((gc_content>company.GC_Content_Threshold) and (gc_content<company.GC_Content_Maximum)):
-        #print('hitgc')
+        overGC_Content=True
         price=price+company.GC_Content_PriceIncrease
     if(homology_score>company.Homology_Threshold):
-        #print('hit homo')
+        overFoldingScore=True
         price=price+company.Homology_PriceIncrease
     if(Sequence.type=="dsDNA"):
         #print('hitdna')
         price=price+company.Double_Stranded_Price_Increase
-    print(price)
     price=price*lengthofsequence
-    return price
+    return price,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore
