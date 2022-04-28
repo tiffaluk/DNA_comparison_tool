@@ -29,11 +29,12 @@ function Button(props) {
     });
     const d = await response.json();
     const bestIndex=0;
-    const bestPrice=Math.pow(10, 1000); //
+    var bestPrice=Math.pow(10, 1000); //
     var a=d[0];
     for (let step = 0; step < 4; step++) {
       if(d[step].Price<bestPrice){
         if(d[step].Price>0){
+          bestPrice=d[step].Price;
           a=d[step];
         }
       }

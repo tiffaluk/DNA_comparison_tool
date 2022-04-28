@@ -32,7 +32,7 @@ class Sequence:
         self.assembly_cost = [float('inf')] * 5
         self.company_cost = [float('inf')] * 5
 
-    # Get basic sequence characteristics 
+    # Get basic sequence characteristics
     def get_gc_content(self):
         c_content = self.name.count('C')
         g_content = self.name.count('G')
@@ -81,7 +81,7 @@ class Sequence:
             cost_penalty = float('inf')
             return
 
-        
+
         self.gg_parts.append(self.name)
         self.get_gg_parts()
 
@@ -89,14 +89,14 @@ class Sequence:
 
         self.assembly_cost[3] = cost_penalty
 
-    def check_gibson(self):
+    #def check_gibson(self):
 
     # Split desired dna sequence into possible parts for assembly
     def get_bb_parts(self):
         total_seq = self.name
         biobrick_df = pd.read_csv('biobrick_library.csv')
         bb_lib_np = biobrick_df.to_numpy()
-        
+
         count = 0
         for i in range(len(bb_lib_np)):
             m = []
@@ -106,7 +106,7 @@ class Sequence:
                 self.bb_parts.append(bb_lib_np[i])
                 for k in range(len(bb_lib_np[i])):
                     total_seq[j + k] = "_"
-        
+
         total_seq_remain = total_seq.split("_")
         total_seq_remain = ' '.join(total_seq_remain).split()
         count = count + len(total_seq_remain)
@@ -130,7 +130,7 @@ class Sequence:
 
             self.gg_parts = new_gg_parts
             new_gg_parts = []
-            
+
             if len(self.gg_parts) > 1:
                 seen = dict()
                 for i in range(len(self.gg_parts)):
@@ -146,9 +146,4 @@ class Sequence:
             if new_max_len < old_max_len:
                 self.get_gg_parts()
             else:
-                return 
-
-    
-
-
-
+                return
