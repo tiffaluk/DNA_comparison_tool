@@ -33,11 +33,15 @@ def AllCompany(Sequence,Companies):
     list=[]
     Sequence.get_gc_content()
     Sequence.get_folding_score()
+    assembly_method,min_assembly_cost=Sequence.get_best_assembly_method();
     test={
         "SequenceLength": len(Sequence.name),
         "GC_Content":Sequence.gc_content,
-        "Folding_Score":Sequence.fold_score
+        "Folding_Score":Sequence.fold_score,
+        "Best_Assembly":"BioBrick"
     }
+    print(assembly_method)
+    print("hi")
     list.append(test)
     for company in Companies.iterator():
         overLengthThreshold=False
@@ -50,6 +54,8 @@ def AllCompany(Sequence,Companies):
                 currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
         else:
             currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScoree=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
+
+        #currentPrice=currentPrice+min_assembly_cost;
         value = {
             "CompanyName":company.CompanyName,
             "Price" : currentPrice,
@@ -91,7 +97,6 @@ def PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max
         overFoldingScore=True
         price=price+company.Homology_PriceIncrease
     if(Sequence.type=="dsDNA"):
-        #print('hitdna')
         price=price+company.Double_Stranded_Price_Increase
     price=price*lengthofsequence
     return price,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore

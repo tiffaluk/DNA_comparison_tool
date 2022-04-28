@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 
 class ResultsBox extends Component {
-  state = {};
+  state = {
+
+  };
+
   render() {
     return (
       <div className={this.props.visibility}>
@@ -9,8 +12,8 @@ class ResultsBox extends Component {
         <div className="results-box">
           <h3 id="CompanyName">{"Company: " + this.props.users.CompanyName}</h3>
           <h3>{"Price:$ " + this.props.users.Price.toFixed(2)}</h3>
-          <h3>Turnaround time:</h3>
-          <h3>Assembly method:</h3>
+          <h3>Turnaround time: 5 Days</h3>
+          <h3>{"Assembly method: BioBrick" + this.props.users.AssemblyMethod}</h3>
         </div>
       </div>
     );
