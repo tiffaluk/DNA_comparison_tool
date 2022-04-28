@@ -4,6 +4,7 @@ import os
 import re
 
 from hashlib import new
+from Bio.Alphabet import IUPAC
 from Bio.Blast import NCBIWWW
 from Bio.Seq import Seq
 from Bio.SeqUtils import MeltingTemp
@@ -12,10 +13,43 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 # Sequence class for input genetic sequences
 class Sequence:
     def	__init__(self, name, type):
-        self.name = name.upper()
+        name = name.upper()
+        if type == 'ssDNA' or type == 'dsDNA':
+            self.name = name
+        elif type == 'RNA':
+            self.name = name.replace("U", "T")
+        elif type == 'AA':
+
+            prot_table = {
+                'A': 'GCA',
+                'C': 'TGC',
+                'D': 'GAC',
+                'E': 'GAA',
+                'F': 'TTC',
+                'G': 'GGA',
+                'H': 'CAC',
+                'I': 'ATA',
+                'K': 'AAA',
+                'L': 'CTA',
+                'M': 'ATG',
+                'N': 'AAC',
+                'P': 'CCA',
+                'Q': 'CAA',
+                'R': 'AGA',
+                'S': 'AGC',
+                'T': 'ACA',
+                'V': 'GTA',
+                'W': 'TGG',
+                'Y': 'TAC',
+                '_': 'TAA',
+                }
+            self.name = ""
+            for i in range(len(name)):
+                self.name += prot_table[name[i]] 
+
         self.type = type
 
-        self.turn_time = 0
+        
         self.gc_content = 0
         self.get_gc_content()
 
@@ -27,10 +61,12 @@ class Sequence:
 
         self.bb_parts = []
         self.gg_parts = []
+        self.gibson_parts = []
 
-        #0 is, 1 is biobrick, 2 is, 3 is goldengate, 4 is
-        self.assembly_cost = [float('inf')] * 5
-        self.company_cost = [float('inf')] * 5
+        #0 is biobrick, 1 is goldengate, 2 is gibson
+        self.turn_time = [float('inf')] * 0
+        self.assembly_cost = [float('inf')] * 1
+        self.company_cost = [float('inf')] * 2
 
     # Get basic sequence characteristics
     def get_gc_content(self):
@@ -59,12 +95,14 @@ class Sequence:
         res_sites = [ecori_site,xbal_site,spel_site,pstl_site]
 
         if any(res_site in self.name for res_site in res_sites):
-            cost_penalty = float('inf')
+            self.assembly_cost[0] = float('inf')
+            self.turn_time[0] = float('inf')
+            return
 
         self.get_bb_parts()
 
-        cost_penalty = cost_penalty + len(self.bb_parts) * 0.01
-        self.assembly_cost[1] = cost_penalty
+        self.turn_time[0] = len(self.bb_parts) * 0.01
+        self.assembly_cost[0] = cost_penalty
 
     def check_gg(self):
         cost_penalty = 0
@@ -74,22 +112,27 @@ class Sequence:
         segment = self.name
 
         if bsal_site_5 in segment:
-            cost_penalty = float('inf')
+            self.assembly_cost[1] = float('inf')
+            self.turn_time[1] = float('inf')
             return
 
         if self.tm < 37:
-            cost_penalty = float('inf')
+            self.assembly_cost[1] = float('inf')
+            self.turn_time[1] = float('inf')
             return
 
 
         self.gg_parts.append(self.name)
         self.get_gg_parts()
 
-        cost_penalty = cost_penalty + len(self.gg_part) * 0.02
+        cost_penalty = cost_penalty + len(self.gg_parts) * 2
 
-        self.assembly_cost[3] = cost_penalty
+        self.assembly_cost[1] = cost_penalty
+        self.turn_time[1] = 30 * len(self.gg_parts) + 30
 
-    #def check_gibson(self):
+    def check_gibson(self):
+        cost_penalty = 0
+
 
     # Split desired dna sequence into possible parts for assembly
     def get_bb_parts(self):
@@ -112,9 +155,8 @@ class Sequence:
         count = count + len(total_seq_remain)
 
 
-
     def get_gg_parts(self):
-        if len(max(self.gg_parts, key=len)) <= 100: # don't have to split after 1000
+        if len(max(self.gg_parts, key=len)) <= 100: # don't have to split after 100
             return
         else:
             old_max_len = len(max(self.gg_parts, key=len))
@@ -146,4 +188,43 @@ class Sequence:
             if new_max_len < old_max_len:
                 self.get_gg_parts()
             else:
-                return
+                return 
+
+    def get_gibson_parts(self):
+        #parts can be 500 bp to 32 kb long
+        num_parts = 5
+        '''
+        if len(self.name) < 500:
+            self.turn_time = float('inf')
+            self.assembly_cost = float('inf')
+        elif len(self.name) < 1000:
+            self.gibson_parts = self.name
+            self.turn_time = 30
+            self.assembly_cost
+        elif len(self.name) < 1500:
+            num_parts = 
+        '''
+
+        self.gibson_parts = [self.name[i:i+num_parts] for i in range(0, len(self.name), num_parts)]
+        self.turn_time[2] = 80 
+        self.assembly_cost[2] = 30*len(self.gibson_parts)
+        if self.tm < 50:
+            self.assembly_cost[2] = self.assembly_cost[2] + 30
+
+
+
+    def get_best_assembly_method(self):
+        min_assembly_cost = min(self.assembly_cost)
+        min_assembly_index = self.assembly_cost.index(min_assembly_cost)
+
+        min_turn_time = min(self.turn_time)
+        min_turn_index = self.turn_time.index(min_turn_time)
+
+        if min_assembly_index == 0:
+            assembly_method = "BioBrick"
+        elif min_assembly_index == 1:
+            assembly_method = "GoldenGate"
+        elif min_assembly_index == 2:
+            assembly_method = "Gibson"
+
+        return assembly_method, min_assembly_cost
