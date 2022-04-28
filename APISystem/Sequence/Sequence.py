@@ -4,7 +4,6 @@ import os
 import re
 
 from hashlib import new
-from Bio.Alphabet import IUPAC
 from Bio.Blast import NCBIWWW
 from Bio.Seq import Seq
 from Bio.SeqUtils import MeltingTemp
@@ -64,9 +63,13 @@ class Sequence:
         self.gibson_parts = []
 
         #0 is biobrick, 1 is goldengate, 2 is gibson
-        self.turn_time = [float('inf')] * 0
-        self.assembly_cost = [float('inf')] * 1
-        self.company_cost = [float('inf')] * 2
+        self.turn_time = [0] * 0
+        self.assembly_cost = [0] * 1
+        self.company_cost = [0] * 2
+
+        self.check_bb()
+        self.check_gg()
+        self.check_gibson()
 
     # Get basic sequence characteristics
     def get_gc_content(self):
@@ -101,7 +104,7 @@ class Sequence:
 
         self.get_bb_parts()
 
-        self.turn_time[0] = len(self.bb_parts) * 0.01
+        self.turn_time[0] = (len(self.bb_parts) - 1) * 30
         self.assembly_cost[0] = cost_penalty
 
     def check_gg(self):
@@ -131,7 +134,12 @@ class Sequence:
         self.turn_time[1] = 30 * len(self.gg_parts) + 30
 
     def check_gibson(self):
-        cost_penalty = 0
+        self.get_gibson_parts()
+
+        if self.tm < 50:
+            self.assembly_cost[2] = self.assembly_cost[2] + 30
+            self.turn_time[2] = self.turn_time + 30
+
 
 
     # Split desired dna sequence into possible parts for assembly
@@ -149,9 +157,14 @@ class Sequence:
                 self.bb_parts.append(bb_lib_np[i])
                 for k in range(len(bb_lib_np[i])):
                     total_seq[j + k] = "_"
+        self.assembly_cost[0] = self.assembly_cost[0] + len(self.bb_parts) * 5
 
         total_seq_remain = total_seq.split("_")
         total_seq_remain = ' '.join(total_seq_remain).split()
+
+        self.assembly_cost[0] = self.assembly_cost[0] + len(total_seq_remain) * 30
+        self.turn_time[0] = self.turn_time[0] + 30*len(total_seq_remain)
+
         count = count + len(total_seq_remain)
 
 
@@ -206,10 +219,9 @@ class Sequence:
         '''
 
         self.gibson_parts = [self.name[i:i+num_parts] for i in range(0, len(self.name), num_parts)]
-        self.turn_time[2] = 80 
+        self.turn_time[2] = 80 + 30 * len(self.gibson_parts)
         self.assembly_cost[2] = 30*len(self.gibson_parts)
-        if self.tm < 50:
-            self.assembly_cost[2] = self.assembly_cost[2] + 30
+        
 
 
 
