@@ -18,14 +18,19 @@ class CompanyCard extends Component {
                 role="img"
                 aria-labelledby="title desc"
                 className="center"
+                style="
+                skin: #eab38f;
+                eyes: #1f1f1f;
+                hair: #2f1b0d;
+                "
               >
                 <title id="title"></title>
-                <style>
+                {/* <style>
                 .skin { fill: #eab38f;}
                 .eyes { fill: #1f1f1f;}
                 .hair { fill: #2f1b0d;}
                 .line { fill: none; stroke: #2f1b0d; stroke-width:2px;}
-                </style>
+                </style> */}
 
                 <defs>
                   <clipPath id="scene">

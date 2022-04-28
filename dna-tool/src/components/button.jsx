@@ -26,7 +26,7 @@ function Button(props) {
       method: "PUT",
       headers: head,
       body: data,
-    })
+    });
     const d = await response.json();
     console.log(d);
     props.onSubmit(d);
@@ -41,13 +41,7 @@ function Button(props) {
         type="submit"
         className="submitButton"
         onClick={() => {
-          // console.log(users);
-          getApiData()
-
-          // console.log(users);
-
-          // navigate("/result");
-          //renderCompanies(users);
+          getApiData();
         }}
       >
         Submit
