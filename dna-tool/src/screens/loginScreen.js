@@ -9,7 +9,7 @@ class LoginScreen extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        {/* <NavBar /> */}
         <LoginBg />
         <LoginButtons />
       </div>

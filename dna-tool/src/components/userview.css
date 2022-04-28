@@ -123,7 +123,9 @@ body {
   align-items: center;
   width: 95vw;
   margin-left: -20px;
-  margin-top: 0px;
+  margin-top: 10px;
+  position: relative;
+  flex-wrap: wrap;
 }
 
 .more-button {

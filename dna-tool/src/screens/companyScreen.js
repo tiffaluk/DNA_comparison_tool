@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import CompanyCards from "../components/companyCards";
-import CompanyCard from "../components/companyCard";
-
-import { HomeButton, MoreButton } from "../components/iconButton";
+import { HomeButton } from "../components/iconButton";
 
 class CompanyScreen extends Component {
   state = {};

@@ -3,7 +3,7 @@
 .company-screen {
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -15,11 +15,12 @@
 }
 
 .title {
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   display: flex;
   color: white;
   font-weight: bold;
+  height: 0px;
 }
 
 .center {
@@ -190,77 +191,4 @@
   right: 1rem;
   font-size: 0.7em;
   color: #9b3c37;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
-.container {
-  width: 100vw;
-  height: 100vh;
-  background: #fceeb5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* button {
-  width: 270px;
-  height: 80px;
-  border: none;
-  outline: none;
-  background: #2f2f2f;
-  color: #fff;
-  font-size: 22px;
-  border-radius: 40px;
-  text-align: center;
-  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-} */
-
-.check-box {
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
-  box-shadow: 0 0 12px -2px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  top: 0;
-  right: -40px;
-  opacity: 0;
-}
-
-.check-box svg {
-  width: 40px;
-  margin: 20px;
-}
-
-svg path {
-  stroke-width: 3;
-  stroke: #fff;
-  stroke-dasharray: 34;
-  stroke-dashoffset: 34;
-  stroke-linecap: round;
-}
-
-.active {
-  background: #ff2b75;
-  transition: 1s;
-}
-
-.active .check-box {
-  right: 0;
-  opacity: 1;
-  transition: 1s;
-}
-
-.active p {
-  margin-right: 125px;
-  transition: 1s;
-}
-
-.active svg path {
-  stroke-dashoffset: 0;
-  transition: 1s;
-  transition-delay: 1s;
 }
