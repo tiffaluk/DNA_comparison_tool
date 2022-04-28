@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import re
 
 from hashlib import new
 from Bio.Blast import NCBIWWW
@@ -62,6 +63,7 @@ class Sequence:
 
         self.get_bb_parts()
 
+        cost_penalty = cost_penalty + len(self.bb_parts) * 0.01
         self.assembly_cost[1] = cost_penalty
 
     def check_gg(self):
@@ -73,21 +75,42 @@ class Sequence:
 
         if bsal_site_5 in segment:
             cost_penalty = float('inf')
+            return
 
         if self.tm < 37:
             cost_penalty = float('inf')
+            return
 
         
         self.gg_parts.append(self.name)
         self.get_gg_parts()
 
+        cost_penalty = cost_penalty + len(self.gg_part) * 0.02
+
         self.assembly_cost[3] = cost_penalty
+
+    def check_gibson(self):
 
     # Split desired dna sequence into possible parts for assembly
     def get_bb_parts(self):
+        total_seq = self.name
         biobrick_df = pd.read_csv('biobrick_library.csv')
         bb_lib_np = biobrick_df.to_numpy()
-        print(bb_lib_np)
+        
+        count = 0
+        for i in range(len(bb_lib_np)):
+            m = []
+            [m.start() for m in re.finditer(bb_lib_np[i], total_seq)]
+            for j in range(len(m)):
+                count = count + 1
+                self.bb_parts.append(bb_lib_np[i])
+                for k in range(len(bb_lib_np[i])):
+                    total_seq[j + k] = "_"
+        
+        total_seq_remain = total_seq.split("_")
+        total_seq_remain = ' '.join(total_seq_remain).split()
+        count = count + len(total_seq_remain)
+
 
 
     def get_gg_parts(self):
