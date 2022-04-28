@@ -21,14 +21,15 @@ function Button(props) {
   });
   var head = { "Content-Type": "application/json" };
 
-  const [users, setUsers] = useState();
   const getApiData = async () => {
     const response = await fetch("http://localhost:8000/company", {
-      method: "POST",
+      method: "PUT",
       headers: head,
       body: data,
-    }).then((response) => response.json());
-    setUsers(response);
+    })
+    const d = await response.json();
+    console.log(d);
+    props.onSubmit(d);
   };
 
   // useEffect(() => {
@@ -40,11 +41,13 @@ function Button(props) {
         type="submit"
         className="submitButton"
         onClick={() => {
-          getApiData();
-          props.onSubmit();
-          console.log("submitted");
+          // console.log(users);
+          getApiData()
+
+          // console.log(users);
+
           // navigate("/result");
-          // renderCompanies(users);
+          //renderCompanies(users);
         }}
       >
         Submit

@@ -10,6 +10,7 @@ def BestCompany(Sequence,Companies):
     bestPrice = float('inf')
     bestCompany=""
     for company in Companies.iterator():
+
         if(Sequence.type=="Amino Acids"):
             if(company.AminoAcidSequence==True):
                 currentPrice=PriceofCompany(Sequence,company)
@@ -28,6 +29,7 @@ def BestCompany(Sequence,Companies):
 
 
 def PriceofCompany(Sequence,company):
+    print(company.CompanyName)
     currentsequence=Sequence.name
     Sequence.get_gc_content()
     gc_content=Sequence.gc_content
@@ -39,20 +41,19 @@ def PriceofCompany(Sequence,company):
     if((lengthofsequence>company.BP_Length_Maximum) or (lengthofsequence<company.BP_Length_Minimum)):
         return -1
     elif ((lengthofsequence>company.BP_Length_Threshold) and (lengthofsequence<company.BP_Length_Maximum)):
-        print('hit bp')
-        price=price.to_decimal()+company.BP_Length_PriceIncrease.to_decimal()
-    if(gc_content>company.GC_Content_Maximum.to_decimal()):
+        #print('hit bp')
+        price=price+company.BP_Length_PriceIncrease
+    if(gc_content>company.GC_Content_Maximum):
         return -1
-    elif ((gc_content>company.GC_Content_Threshold.to_decimal()) and (gc_content<company.GC_Content_Maximum.to_decimal())):
-        print('hitgc')
-        price=price+company.GC_Content_PriceIncrease.to_decimal()
+    elif ((gc_content>company.GC_Content_Threshold) and (gc_content<company.GC_Content_Maximum)):
+        #print('hitgc')
+        price=price+company.GC_Content_PriceIncrease
     if(homology_score>company.Homology_Threshold):
-        print('hit homo')
-        price=price+company.Homology_PriceIncrease.to_decimal()
+        #print('hit homo')
+        price=price+company.Homology_PriceIncrease
     if(Sequence.type=="dsDNA"):
-        print('hitdna')
-        price=price+company.Double_Stranded_Price_Increase.to_decimal()
-    print(homology_score)
+        #print('hitdna')
+        price=price+company.Double_Stranded_Price_Increase
     print(price)
     price=price*lengthofsequence
     return price

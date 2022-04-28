@@ -16,12 +16,19 @@ def companyAPI(request,id=0):
         companies = Company.objects.all()
         companies_serializer=CompanySerializer(companies,many=True)
         return JsonResponse(companies_serializer.data, safe=False)
-    elif request.method=='POST':
+    elif request.method=='PUT':
         companies = Company.objects.all()
         user_data=JSONParser().parse(request)
         currentSequence=Sequence(user_data['Sequence'],user_data['Type'])
         company=BestCompany(currentSequence,companies)
         return JsonResponse(json.loads(company), safe=False)
+    elif request.method=='POST':
+        company_data=JSONParser().parse(request)
+        companies_serializer=CompanySerializer(data=company_data)
+        if companies_serializer.is_valid():
+            companies_serializer.save()
+            return JsonResponse("Added Succesfully",safe=False)
+        return JsonResponse("Failed to Add",safe=False)
     elif request.method=='DELETE':
         company=Company.objects.get(CompanyName=name)
         company.delete()

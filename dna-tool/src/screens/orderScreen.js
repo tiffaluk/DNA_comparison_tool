@@ -9,11 +9,16 @@ class OrderScreen extends Component {
     inSeq: "",
     inType: "",
     v: "result-container-hidden",
+    users: {
+      CompanyName: "",
+      Price: 0.0
+    }
   };
 
-  handleSubmit = () => {
+  handleSubmit = (users) => {
     const v = "result-container-visible";
-    this.setState({ v });
+
+    this.setState({ v, users });
 
     console.log("Handled submit");
   };
@@ -37,7 +42,7 @@ class OrderScreen extends Component {
           inType={this.state.inType}
           onSubmit={this.handleSubmit}
         />
-        <ResultsBox visibility={this.state.v} />
+        <ResultsBox visibility={this.state.v} users = {this.state.users}/>
       </div>
     );
   }
