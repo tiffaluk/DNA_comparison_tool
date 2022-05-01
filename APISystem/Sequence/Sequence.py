@@ -63,9 +63,9 @@ class Sequence:
         self.gibson_parts = []
 
         #0 is biobrick, 1 is goldengate, 2 is gibson
-        self.turn_time = [0,0,0,0]
-        self.assembly_cost = [0,0,0,0]
-        self.company_cost = [0,0,0,0]
+        self.turn_time = [0,0,0]
+        self.assembly_cost = [0,0,0]
+        self.company_cost = [0,0,0]
 
         self.check_bb()
         self.check_gg()
@@ -89,19 +89,19 @@ class Sequence:
     # Check if assembly method is possible for sequence
     def check_bb(self):
         cost_penalty = 0
-
+        '''
         ecori_site = "AATTC"
         xbal_site = "CTAGA"
         spel_site = "CTAGT"
         pstl_site = "CTGCA"
-
+        
         res_sites = [ecori_site,xbal_site,spel_site,pstl_site]
 
         if any(res_site in self.name for res_site in res_sites):
             self.assembly_cost[0] = float('inf')
             self.turn_time[0]= float('inf')
             return
-
+        '''
         self.get_bb_parts()
 
         self.turn_time[0] = (len(self.bb_parts) - 1) * 30
@@ -144,30 +144,30 @@ class Sequence:
 
     # Split desired dna sequence into possible parts for assembly
     def get_bb_parts(self):
-        '''
         total_seq = self.name
         biobrick_df = pd.read_csv('biobrick_library.csv')
         bb_lib_np = biobrick_df.to_numpy()
 
         count = 0
         for i in range(len(bb_lib_np)):
-            m = []
-            [m.start() for m in re.finditer(bb_lib_np[i][1], total_seq)]
-            for j in range(len(m)):
-                count = count + 1
+            for match in re.finditer(bb_lib_np[i][1], total_seq):
+                print(bb_lib_np[i][1])
                 self.bb_parts.append(bb_lib_np[i][1])
-                for k in range(len(bb_lib_np[i][1])):
-                    total_seq[j + k] = "_"
+                s = match.start()
+                e = match.end()
+                for i in range(s, e):
+                    total_seq = total_seq[:i] + "_" + total_seq[i+1:]
+                
         self.assembly_cost[0] = self.assembly_cost[0] + len(self.bb_parts) * 5
 
         total_seq_remain = total_seq.split("_")
         total_seq_remain = ' '.join(total_seq_remain).split()
+        self.bb_parts.extend(total_seq_remain)
 
         self.assembly_cost[0] = self.assembly_cost[0] + len(total_seq_remain) * 30
         self.turn_time[0] = self.turn_time[0] + 30*len(total_seq_remain)
 
         count = count + len(total_seq_remain)
-        '''
 
 
     def get_gg_parts(self):
@@ -208,6 +208,7 @@ class Sequence:
     def get_gibson_parts(self):
         #parts can be 500 bp to 32 kb long
         num_parts = 5
+
         '''
         if len(self.name) < 500:
             self.turn_time = float('inf')
@@ -222,7 +223,7 @@ class Sequence:
 
         self.gibson_parts = [self.name[i:i+num_parts] for i in range(0, len(self.name), num_parts)]
         self.turn_time[2] = 80 + 30 * len(self.gibson_parts)
-
+        
         self.turn_time[2] = 80
         self.assembly_cost[2] = 30*len(self.gibson_parts)
 

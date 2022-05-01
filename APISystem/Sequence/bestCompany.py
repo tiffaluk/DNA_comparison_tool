@@ -12,7 +12,7 @@ def BestCompany(Sequence,Companies):
 
     for company in Companies.iterator():
 
-        if(Sequence.type=="Amino Acids"):
+        if(Sequence.type=="AA"):
             if(company.AminoAcidSequence==True):
                 currentPrice=PriceofCompany(Sequence,company)
         else:
@@ -49,7 +49,7 @@ def AllCompany(Sequence,Companies):
         overGC_Content=False
         overGC_Max=False
         overFoldingScore=False
-        if(Sequence.type=="Amino Acids"):
+        if(Sequence.type=="AA"):
             if(company.AminoAcidSequence==True):
                 currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
         else:
