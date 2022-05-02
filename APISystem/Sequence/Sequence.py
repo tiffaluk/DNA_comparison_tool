@@ -1,7 +1,9 @@
 import pandas as pd
 import numpy as np
 import os
+import random
 import re
+
 
 from hashlib import new
 from Bio.Blast import NCBIWWW
@@ -88,7 +90,6 @@ class Sequence:
 
     # Check if assembly method is possible for sequence
     def check_bb(self):
-        cost_penalty = 0
         '''
         ecori_site = "AATTC"
         xbal_site = "CTAGA"
@@ -105,7 +106,6 @@ class Sequence:
         self.get_bb_parts()
 
         self.turn_time[0] = (len(self.bb_parts) - 1) * 30
-        self.assembly_cost[0] = cost_penalty
 
     def check_gg(self):
         cost_penalty = 0
@@ -209,6 +209,7 @@ class Sequence:
         #parts can be 500 bp to 32 kb long
         num_parts = 5
 
+
         '''
         if len(self.name) < 500:
             self.turn_time = float('inf')
@@ -223,9 +224,56 @@ class Sequence:
 
         self.gibson_parts = [self.name[i:i+num_parts] for i in range(0, len(self.name), num_parts)]
         self.turn_time[2] = 80 + 30 * len(self.gibson_parts)
-
+        
         self.turn_time[2] = 80
         self.assembly_cost[2] = 30*len(self.gibson_parts)
+
+    '''
+    def get_gibson_parts_(self):
+        #parts can be 500 bp to 32 kb long
+        num_parts = 5
+        size_range = range(500, 32000)
+
+        if len(self.name) < 500:
+            self.turn_time = float('inf')
+            self.assembly_cost[2] = float('inf')
+        elif len(self.name) < 1000:
+            self.gibson_parts = self.name
+            self.turn_time = 30
+            self.assembly_cost[2] = 30
+        elif len(self.name) < 1500:
+            num_parts = 2
+            size_range = range(500, len(self.name) / 2)
+        elif len(self.name) < 2000:
+            num_parts = 3
+            size_range = range(500, len(self.name) / 3)
+        elif len(self.name) < 2500:
+            num_parts = 4
+            size_range = range(500, len(self.name) / 4)
+        elif len(self.name < 30000):
+            num_parts = 5
+            size_range = range(len(500, len(self.name) / 5))
+
+        curr_parts = []
+        curr_point = 0
+        for i in range(len(num_parts-1)):
+            random_point = random.choice(size_range)
+            curr_parts.append(self.name[curr_point:curr_point + random_point])
+            curr_point = curr_point + random_point
+
+        curr_parts.append(self.name[curr_point:])
+        
+
+        for curr_part in curr_parts:
+            curr_part_temp = 
+
+
+        self.turn_time[2] = 80 + 30 * len(self.gibson_parts)
+        
+        self.turn_time[2] = 80  
+        self.assembly_cost[2] = 30*len(self.gibson_parts)
+    '''
+    
 
 
 
@@ -234,8 +282,8 @@ class Sequence:
         min_assembly_cost = min(self.assembly_cost)
         min_assembly_index = self.assembly_cost.index(min_assembly_cost)
 
-        #min_turn_time = min(self.turn_time)
-        #min_turn_index = self.turn_time.index(min_turn_time)
+        min_turn_time = min(self.turn_time)
+        min_turn_index = self.turn_time.index(min_turn_time)
         assembly_method_index=1
         assembly_method=""
         if min_assembly_index == 0:
