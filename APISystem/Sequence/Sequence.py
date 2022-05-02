@@ -17,7 +17,7 @@ class Sequence:
             self.name = name
         elif type == 'RNA':
             self.name = name.replace("U", "T")
-        elif type == 'AA':
+        elif type == 'Amino Acids':
 
             prot_table = {
                 'A': 'GCA',

@@ -33,8 +33,7 @@ def AllCompany(Sequence,Companies):
     Sequence.get_gc_content()
     Sequence.get_folding_score()
     assembly_method, min_assembly_cost=Sequence.get_best_assembly_method()
-    print(assembly_method)
-    print(min_assembly_cost)
+    print(Sequence.name)
     test={
         "SequenceLength": len(Sequence.name),
         "GC_Content":Sequence.gc_content,
@@ -48,12 +47,12 @@ def AllCompany(Sequence,Companies):
         overGC_Content=False
         overGC_Max=False
         overFoldingScore=False
-        if(Sequence.type=="AA"):
+        if(Sequence.type=="Amino Acids"):
             if(company.AminoAcidSequence==True):
                 currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
         else:
             currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScoree=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
-
+        print(currentPrice);
         #currentPrice=currentPrice+min_assembly_cost;
         value = {
             "CompanyName":company.CompanyName,
