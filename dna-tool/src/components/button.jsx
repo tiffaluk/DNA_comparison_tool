@@ -46,7 +46,7 @@ function Button(props) {
     // })
     a={
       ...a,
-      "AssemblyMethod":" ",
+      "AssemblyMethod":d[0].Best_Assembly,
     }
     console.log(a);
     localStorage.setItem("prices",JSON.stringify(d));

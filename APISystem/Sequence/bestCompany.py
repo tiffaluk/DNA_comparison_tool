@@ -9,7 +9,6 @@ class DecimalEncoder(json.JSONEncoder):
 def BestCompany(Sequence,Companies):
     bestPrice = float('inf')
     bestCompany=""
-
     for company in Companies.iterator():
 
         if(Sequence.type=="AA"):
@@ -33,15 +32,15 @@ def AllCompany(Sequence,Companies):
     list=[]
     Sequence.get_gc_content()
     Sequence.get_folding_score()
-    assembly_method,min_assembly_cost=Sequence.get_best_assembly_method();
+    assembly_method, min_assembly_cost=Sequence.get_best_assembly_method()
+    print(assembly_method)
+    print(min_assembly_cost)
     test={
         "SequenceLength": len(Sequence.name),
         "GC_Content":Sequence.gc_content,
         "Folding_Score":Sequence.fold_score,
-        "Best_Assembly":"BioBrick"
+        "Best_Assembly":assembly_method
     }
-    print(assembly_method)
-    print("hi")
     list.append(test)
     for company in Companies.iterator():
         overLengthThreshold=False

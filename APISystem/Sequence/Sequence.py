@@ -94,7 +94,7 @@ class Sequence:
         xbal_site = "CTAGA"
         spel_site = "CTAGT"
         pstl_site = "CTGCA"
-        
+
         res_sites = [ecori_site,xbal_site,spel_site,pstl_site]
 
         if any(res_site in self.name for res_site in res_sites):
@@ -138,7 +138,7 @@ class Sequence:
 
         if self.tm < 50:
             self.assembly_cost[2] = self.assembly_cost[2] + 30
-            self.turn_time[2] = self.turn_time + 30
+            self.turn_time[2] = self.turn_time[2] + 30
 
 
 
@@ -157,7 +157,7 @@ class Sequence:
                 e = match.end()
                 for i in range(s, e):
                     total_seq = total_seq[:i] + "_" + total_seq[i+1:]
-                
+
         self.assembly_cost[0] = self.assembly_cost[0] + len(self.bb_parts) * 5
 
         total_seq_remain = total_seq.split("_")
@@ -223,7 +223,7 @@ class Sequence:
 
         self.gibson_parts = [self.name[i:i+num_parts] for i in range(0, len(self.name), num_parts)]
         self.turn_time[2] = 80 + 30 * len(self.gibson_parts)
-        
+
         self.turn_time[2] = 80
         self.assembly_cost[2] = 30*len(self.gibson_parts)
 
