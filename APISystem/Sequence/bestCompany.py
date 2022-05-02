@@ -33,7 +33,7 @@ def AllCompany(Sequence,Companies):
     Sequence.get_gc_content()
     Sequence.get_folding_score()
     assembly_method, min_assembly_cost=Sequence.get_best_assembly_method()
-    print(Sequence.name)
+    print(Sequence.gg_parts)
     test={
         "SequenceLength": len(Sequence.name),
         "GC_Content":Sequence.gc_content,
@@ -52,7 +52,7 @@ def AllCompany(Sequence,Companies):
                 currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
         else:
             currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScoree=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
-        print(currentPrice);
+
         #currentPrice=currentPrice+min_assembly_cost;
         value = {
             "CompanyName":company.CompanyName,
@@ -65,7 +65,18 @@ def AllCompany(Sequence,Companies):
             }
         list.append(value)
 
-
+        parts={
+            "BBParts": Sequence.bb_parts,
+            "BBCost":  Sequence.assembly_cost[0],
+            "BBtime": Sequence.turn_time[0],
+            "GibsonParts": Sequence.gibson_parts,
+            "GibsonCost":Sequence.assembly_cost[2],
+            "Gibsontime":Sequence.turn_time[2],
+            "GGParts": Sequence.gg_parts,
+            "GGCosts":Sequence.assembly_cost[1],
+            "GGtime":Sequence.turn_time[1]
+        }
+        print(parts)
     return json.dumps(list,cls=DecimalEncoder)
 
 def PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore):

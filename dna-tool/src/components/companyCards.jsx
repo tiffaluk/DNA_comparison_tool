@@ -92,7 +92,6 @@ class CompanyCards extends Component {
 
                 var c=JSON.parse(localStorage.getItem("prices"));
                 for (let step = 0; step < 4; step++) {
-                  // Runs 5 times, with values of step 0 through 4.
                   this.state.companies[step].assembly=c[0].Best_Assembly;
                   this.state.companies[step].time="5 Days";
                   this.state.companies[step].pricebp=this.state.users[step].Price_Per_BP;

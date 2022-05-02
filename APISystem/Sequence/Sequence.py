@@ -284,8 +284,17 @@ class Sequence:
 
         min_turn_time = min(self.turn_time)
         min_turn_index = self.turn_time.index(min_turn_time)
+<<<<<<< Updated upstream
         assembly_method_index=1
         assembly_method=""
+=======
+        # if min_turn_index == 0:
+        #     turn_method = "BioBrick"
+        # elif min_turn_index == 1:
+        #     turn_method = "GoldenGate"
+        # elif min_turn_index == 2:
+        #     turn_method = "Gibson"
+>>>>>>> Stashed changes
         if min_assembly_index == 0:
             assembly_method = "BioBrick"
         elif min_assembly_index == 1:

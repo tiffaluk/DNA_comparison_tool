@@ -35,7 +35,6 @@ def companyAPI(request,id=0):
         # return JsonResponse("Delete Company", safe=False)
         companies = Company.objects.all()
         user_data=JSONParser().parse(request)
-        print(user_data['Sequence'])
         currentSequence=Sequence(user_data['Sequence'],user_data['Type'])
         company=AllCompany(currentSequence,companies)
         return JsonResponse(json.loads(company), safe=False)
