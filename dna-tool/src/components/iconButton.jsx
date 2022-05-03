@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FaHome } from "react-icons/fa";
 import { MdReadMore } from "react-icons/md";
+import { AiOutlineBuild } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import "./userview.css";
 
@@ -43,6 +44,27 @@ export function MoreButton() {
         <label>Company Details</label>
         <i>
           <MdReadMore size="3em" />
+        </i>
+      </button>
+    </div>
+  );
+}
+
+export function AssemblyButton() {
+  let navigate = useNavigate();
+
+  return (
+    <div className="more-button-container-visible">
+      <button
+        type="submit"
+        className="more-button"
+        onClick={() => {
+          navigate("/assembly");
+        }}
+      >
+        <label>Assembly Method Details</label>
+        <i>
+          <AiOutlineBuild size="3em" />
         </i>
       </button>
     </div>

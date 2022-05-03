@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginScreen from "./screens/loginScreen";
 import OrderScreen from "./screens/orderScreen";
 import CompanyScreen from "./screens/companyScreen";
+import AssemblyScreen from "./screens/assemblyScreen";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/" element={<LoginScreen />} />
         <Route exact path="/order" element={<OrderScreen />} />
         <Route exact path="/company" element={<CompanyScreen />} />
+        <Route exact path="/assembly" element={<AssemblyScreen />} />
       </Routes>
     </Router>
   );

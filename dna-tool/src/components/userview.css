@@ -94,18 +94,19 @@ body {
 .output-title {
   color: white;
   font-weight: bold;
-  margin-top: 10vh;
+  margin-top: 5vh;
   display: flex;
   justify-content: center;
 }
 
 .results-box {
   background-color: rgb(217, 240, 249);
-  height: 180px;
+  height: 170px;
   width: 700px;
   border-radius: 25px;
   padding: 15px;
   color: #9b3c37;
+  justify-content: center;
 }
 
 .home-button {
@@ -142,12 +143,13 @@ body {
 }
 
 .more-button-container-visible {
-  justify-content: flex-end;
+  justify-content: center;
   display: flex;
   align-items: center;
-  width: 80vw;
+  width: 30vw;
   margin-right: -20px;
-  margin-top: 0px;
+  margin-top: 20px;
+  height: 3vw;
   visibility: visible;
   color: #9b3c37;
 }
@@ -158,4 +160,10 @@ body {
 
 .more-button-hidden {
   visibility: hidden;
+}
+
+.icon-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
