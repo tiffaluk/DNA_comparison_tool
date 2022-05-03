@@ -49,7 +49,7 @@ class CompanyCard extends Component {
               </svg> */}
             </div>
             <div className="more-info">
-              <h1 id="name"></h1>
+              <h1></h1>
               <div className="coords">
                 <span>
                   {"Price/bp: " + this.state.pricebp}
@@ -107,9 +107,6 @@ class CompanyCard extends Component {
             </div>
           </div>
           <div className="general">
-            <h1 id="name2"></h1>
-            <p id="timeSignIn"></p>
-            <p id="timeCheckedIn"> </p>
             <p>
               {"Company Name: " + this.state.name}
               <label id="companyName"></label>

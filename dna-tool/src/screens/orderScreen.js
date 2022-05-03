@@ -3,8 +3,13 @@ import SequenceInput from "../components/sequenceInput";
 import Button from "../components/button";
 import RoundButtons from "../components/roundButtons";
 import ResultsBox from "../components/resultsBox";
-import { HomeButton, MoreButton } from "../components/iconButton";
+import {
+  HomeButton,
+  MoreButton,
+  AssemblyButton,
+} from "../components/iconButton";
 import CompanyCards from "../components/companyCards";
+
 class OrderScreen extends Component {
   state = {
     inSeq: "",
@@ -14,8 +19,8 @@ class OrderScreen extends Component {
     users: {
       CompanyName: "",
       Price: 0.0,
-      AssemblyMethod:" ",
-      turntime:"",
+      AssemblyMethod: " ",
+      turntime: "",
     },
   };
 
@@ -48,9 +53,11 @@ class OrderScreen extends Component {
           onSubmit={this.handleSubmit}
         />
         <ResultsBox visibility={this.state.v} users={this.state.users} />
-        <MoreButton />
+        <div className="icon-buttons">
+          <MoreButton />
+          <AssemblyButton />
+        </div>
       </div>
-
     );
   }
 }
