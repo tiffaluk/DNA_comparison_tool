@@ -76,9 +76,7 @@ class CompanyCards extends Component {
   }
 
 
-    // ComponentDidMount is used to
-    // execute the code
-    componentDidMount(props) {
+  componentDidMount(props) {
 
       var head = { "Content-Type": "application/json" };
         fetch(
@@ -153,7 +151,7 @@ class CompanyCards extends Component {
 
 
                 }
-                console.log(this.state.companies)
+  
 
             })
 

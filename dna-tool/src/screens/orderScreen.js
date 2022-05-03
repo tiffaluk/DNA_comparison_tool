@@ -19,8 +19,11 @@ class OrderScreen extends Component {
     users: {
       CompanyName: "",
       Price: 0.0,
-      AssemblyMethod: " ",
-      turntime: "",
+      AssemblyMethod:" ",
+      turntime:"",
+      length:0.0,
+      gc:0.0,
+      foldscore:0.0
     },
   };
 

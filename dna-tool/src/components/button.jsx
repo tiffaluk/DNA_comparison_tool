@@ -162,7 +162,10 @@ function Button(props) {
        a={
          ...a,
          "AssemblyMethod":d[0].Best_Assembly,
-         "turntime":d[0].Turn_time
+         "turntime":d[0].Turn_time,
+         "length":d[0].SequenceLength,
+         "gc":d[0].GC_Content,
+         "foldscore":d[0].Folding_Score,
        }
 
        localStorage.setItem("prices",JSON.stringify(d));

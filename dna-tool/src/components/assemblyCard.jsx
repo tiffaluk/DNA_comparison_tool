@@ -6,9 +6,10 @@ import "./assemblydetailsview.css";
 class AssemblyCard extends Component {
   state = {
     name: this.props.assembly.name,
-    turnaroundtime: this.props.assembly.time,
+    time: this.props.assembly.time,
     extracost: this.props.assembly.extracost,
-    parts: this.props.parts,
+    parts: this.props.assembly.parts,
+
   };
 
   render() {

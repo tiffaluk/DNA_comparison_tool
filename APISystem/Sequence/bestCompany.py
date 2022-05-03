@@ -76,6 +76,7 @@ def AllCompany(Sequence,Companies):
             "GGCosts":Sequence.assembly_cost[1],
             "GGtime":Sequence.turn_time[1]
         }
+        list.append(parts)
     return json.dumps(list,cls=DecimalEncoder)
 
 def PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore):
