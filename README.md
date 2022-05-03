@@ -56,7 +56,7 @@
 
     **Operation strings are ‘stretch’ (x <= 1.5), ‘increase_slope’ (x <= 1.05), ‘decrease_slope(x <= 1.05), ‘stronger_prom’, ‘weaker_prom’, ‘stronger RBS’, ‘weaker_RBS’
 
-4. Starting server
+													  4. Starting server </br>
 After having the correct dependencies and materials as described by the equirements.txt, have 2 different terminals open. One terminal will be cd into the APISystem folder. Within said folder, run the command “python manage.py runserver” which will start the Django server and connect to the MongoDB Atlas database. In a different terminal, cd into the dna-tool server and run the command “npm start” which will start the react.js server and run the react app in development mode. 
 						
 
