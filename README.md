@@ -22,4 +22,6 @@
 	After having the correct dependencies and materials as described by the equirements.txt, have 2 different terminals open. One terminal will be cd into the APISystem folder. Within said folder, run the command “python manage.py runserver” which will start the Django server and connect to the MongoDB Atlas database. In a different terminal, cd into the dna-tool server and run the command “npm start” which will start the react.js server and run the react app in development mode.
 
 4. Using the website
+
+
 	When the user enters the front page, they are able to press the "Assembly my Sequence!" button which leads them to the order sites. After inputing their sequence, they are able to choose between dsDNA,ssDNA, RNA, and Amino Acids based on their choice. After pressing submit, our database will give them the best possible company and also the best assembly method with the turnaround time and cost. The user can press company details to learn more about how each company calculate the price or assembly details to learn about how each assemly method was calculated
