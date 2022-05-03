@@ -69,18 +69,18 @@ def AllCompany(Sequence,Companies):
                 Sequence.assembly_cost[x]=0.0
             if(Sequence.turn_time[x]==float('inf')):
                 Sequence.turn_time[x]=0.0
-        parts={
-            "BBParts": Sequence.bb_parts,
-            "BBCost":  Sequence.assembly_cost[0],
-            "BBtime": Sequence.turn_time[0],
-            "GibsonParts": Sequence.gibson_parts,
-            "GibsonCost":Sequence.assembly_cost[2],
-            "Gibsontime":Sequence.turn_time[2],
-            "GGParts": Sequence.gg_parts,
-            "GGCosts":Sequence.assembly_cost[1],
-            "GGtime":Sequence.turn_time[1]
+    parts={
+        "BBParts": Sequence.bb_parts,
+        "BBCost":  Sequence.assembly_cost[0],
+        "BBtime": Sequence.turn_time[0],
+        "GibsonParts": Sequence.gibson_parts,
+        "GibsonCost":Sequence.assembly_cost[2],
+        "Gibsontime":Sequence.turn_time[2],
+        "GGParts": Sequence.gg_parts,
+        "GGCosts":Sequence.assembly_cost[1],
+        "GGtime":Sequence.turn_time[1]
         }
-        list.append(parts)
+    list.append(parts)
     return json.dumps(list,cls=DecimalEncoder)
 
 def PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore):

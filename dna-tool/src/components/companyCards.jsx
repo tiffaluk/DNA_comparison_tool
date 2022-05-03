@@ -121,6 +121,8 @@ class CompanyCards extends Component {
                       this.state.companies[step].costpenalty="Can't be synthesized"
                   }
                   else{
+                      console.log(step)
+                      console.log(c)
                       this.state.companies[step].price=c[index].Price;
                       this.state.companies[step].costpenalty=(c[index].Price/c[0].SequenceLength)-this.state.users[step].Price_Per_BP
                   }
