@@ -16,7 +16,7 @@ class CompanyCards extends Component {
           time: "1",
           assembly: "m1",
           pricebp: "1",
-          costpenalty: "-1",
+          costpenalty: "1",
           sequencelength:"0",
           lengthpriceincrease:"0",
           gccontent: "0",
@@ -32,7 +32,7 @@ class CompanyCards extends Component {
           time: "2",
           assembly: "m2",
           pricebp: "2",
-          costpenalty: "-2",
+          costpenalty: "2",
           sequencelength:"0",
           lengthpriceincrease:"0",
           gccontent: "0",
@@ -47,7 +47,7 @@ class CompanyCards extends Component {
           time: "3",
           assembly: "m3",
           pricebp: "3",
-          costpenalty: "-3",
+          costpenalty: "3",
           sequencelength:"0",
           lengthpriceincrease:"0",
           gccontent: "0",
@@ -62,7 +62,7 @@ class CompanyCards extends Component {
           time: "4",
           assembly: "m4",
           pricebp: "4",
-          costpenalty: "-4",
+          costpenalty: "4",
           sequencelength:"0",
           lengthpriceincrease:"0",
           gccontent: "0",
@@ -89,6 +89,7 @@ class CompanyCards extends Component {
                 });
 
                 var c=JSON.parse(localStorage.getItem("prices"));
+                console.log(c);
                 for (let step = 0; step < 4; step++) {
                   this.state.companies[step].assembly=c[0].Best_Assembly;
                   this.state.companies[step].time=c[0].Turn_time;
@@ -120,7 +121,7 @@ class CompanyCards extends Component {
                       this.state.companies[step].costpenalty="Can't be synthesized"
                   }
                   else{
-                      this.state.companies[step].price=c[index].Price.toFixed(2);
+                      this.state.companies[step].price=c[index].Price;
                       this.state.companies[step].costpenalty=(c[index].Price/c[0].SequenceLength)-this.state.users[step].Price_Per_BP
                   }
                   this.state.companies[step].sequencelength=this.state.users[step].BP_Length_Minimum + "-"+this.state.users[step].BP_Length_Threshold+"-"+this.state.users[step].BP_Length_Maximum
@@ -151,7 +152,7 @@ class CompanyCards extends Component {
 
 
                 }
-  
+
 
             })
 

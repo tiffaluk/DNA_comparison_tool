@@ -14,7 +14,7 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 # Sequence class for input genetic sequences
 class Sequence:
     def	__init__(self, name, type):
-        name = name.upper()
+        self.name = name.upper()
         if type == 'ssDNA' or type == 'dsDNA':
             self.name = name
         elif type == 'RNA':
@@ -69,56 +69,58 @@ class Sequence:
         self.assembly_cost = [0,0,0]
         self.company_cost = [0,0,0]
 
+
         self.check_bb()
         self.check_gg()
         self.check_gibson()
 
-    # Get basic sequence characteristics
+        # hours to days for turn time
+        for i in range(len(self.turn_time)):
+            self.turn_time[i] = self.turn_time[i] / 24
+
+    # Get GC content of sequence
     def get_gc_content(self):
         c_content = self.name.count('C')
         g_content = self.name.count('G')
         self.gc_content = (c_content + g_content) / len(self.name)
 
+    # get melting temperature of sequence
     def get_melting_temp(self):
-        self.tm = MeltingTemp.Tm_Wallace(Seq(self.name))
+        self.tm = MeltingTemp.Tm_NN(Seq(self.name))
 
+    # Return proportion of sequence which will likely fold into
+    # Secondary structure
     def get_folding_score(self):
         analyzed_seq = ProteinAnalysis(self.name)
         helix_perc, turn_perc, sheet_perc = analyzed_seq.secondary_structure_fraction()
 
         self.fold_score = helix_perc + turn_perc + sheet_perc
 
-    # Check if assembly method is possible for sequence
+    # Check if assembly method is possible for sequence for
+    # biobrick, golden gate, and gibson
     def check_bb(self):
-        '''
-        ecori_site = "AATTC"
-        xbal_site = "CTAGA"
-        spel_site = "CTAGT"
-        pstl_site = "CTGCA"
 
-        res_sites = [ecori_site,xbal_site,spel_site,pstl_site]
 
-        if any(res_site in self.name for res_site in res_sites):
-            self.assembly_cost[0] = float('inf')
-            self.turn_time[0]= float('inf')
-            return
-        '''
         self.get_bb_parts()
 
-        self.turn_time[0] = (len(self.bb_parts) - 1) * 30
+        # 6 hour penalty for joining two biobrick parts
+        self.turn_time[0] = (len(self.bb_parts) - 1) * 6
 
     def check_gg(self):
-        cost_penalty = 0
 
         bsal_site_5 = "GGTCTC"
 
         segment = self.name
 
+        # if violating recognition site is in sequence,
+        # golden gate assembly doesnt work
         if bsal_site_5 in segment:
             self.assembly_cost[1] = float('inf')
             self.turn_time[1] = float('inf')
             return
 
+        # golden gate assembly doesnt work if sequence has
+        # melting temp < 37degC
         if self.tm < 37:
             self.assembly_cost[1] = float('inf')
             self.turn_time[1] = float('inf')
@@ -128,26 +130,34 @@ class Sequence:
         self.gg_parts.append(self.name)
         self.get_gg_parts()
 
-        cost_penalty = cost_penalty + len(self.gg_parts) * 2
+        # turn time penalty of 55 hours for golden gate assembly
+        self.turn_time[1] = 55
 
-        self.assembly_cost[1] = cost_penalty
-        self.turn_time[1] = 30 * len(self.gg_parts) + 30
+        # charge extra for dna synthesis of remnants from scratch ($0.1 per bp), add time
+        # penalty of 1 hr for dna synthesis of each part from scratch
+        for curr_part in self.gg_parts:
+            self.turn_time[1] = self.turn_time[2] + 1
+            self.assembly_cost[1] = self.assembly_cost[2] + 0.1 * len(curr_part)
+        # Cost penalty of $3 per part joining
+        self.assembly_cost[1] = self.assembly_cost[1] + 3 * len(self.gg_parts)
 
     def check_gibson(self):
         self.get_gibson_parts()
 
-        if self.tm < 50:
-            self.assembly_cost[2] = self.assembly_cost[2] + 30
-            self.turn_time[2] = self.turn_time[2] + 30
 
 
 
-    # Split desired dna sequence into possible parts for assembly
+
+    # Split desired dna sequence into possible parts for assembly for
+    # biobrick, golden gate, and gibson
     def get_bb_parts(self):
+        # Read biobrick parts from standard 10 biobrick library
         total_seq = self.name
         biobrick_df = pd.read_csv('biobrick_library.csv')
         bb_lib_np = biobrick_df.to_numpy()
 
+        # find out whether sequence contains biobrick parts, if so
+        # add to bb_parts for sequence
         count = 0
         for i in range(len(bb_lib_np)):
             for match in re.finditer(bb_lib_np[i][1], total_seq):
@@ -158,27 +168,52 @@ class Sequence:
                 for i in range(s, e):
                     total_seq = total_seq[:i] + "_" + total_seq[i+1:]
 
-        self.assembly_cost[0] = self.assembly_cost[0] + len(self.bb_parts) * 5
+        # if part exists in the biobrick library, then assembly cost is $2.50 per part
+        self.assembly_cost[0] = self.assembly_cost[0] + len(self.bb_parts) * 2.50
 
+        # find remnants of sequence and join to bb_parts of sequence
         total_seq_remain = total_seq.split("_")
         total_seq_remain = ' '.join(total_seq_remain).split()
         self.bb_parts.extend(total_seq_remain)
 
-        self.assembly_cost[0] = self.assembly_cost[0] + len(total_seq_remain) * 30
-        self.turn_time[0] = self.turn_time[0] + 30*len(total_seq_remain)
+        # if illegal patterns exist in custom dna remnants, make biobrick
+        # prohibited
+        ecori_site = "AATTC"
+        xbal_site = "CTAGA"
+        spel_site = "CTAGT"
+        pstl_site = "CTGCA"
+        res_sites = [ecori_site,xbal_site,spel_site,pstl_site]
+
+        # charge extra for dna synthesis of remnants from scratch ($0.1 per bp), add time
+        # penalty of 1 hr for dna synthesis of each part from scratch
+
+        for curr_part in total_seq_remain:
+
+            if any(res_site in curr_part for res_site in res_sites):
+                self.assembly_cost[0] = float('inf')
+                self.turn_time[0]= float('inf')
+                return
+
+            self.turn_time[2] = self.turn_time[2] + 1
+            self.assembly_cost[2] = self.assembly_cost[2] + 0.1 * len(curr_part)
 
         count = count + len(total_seq_remain)
 
 
     def get_gg_parts(self):
-        if len(max(self.gg_parts, key=len)) <= 100: # don't have to split after 100
+        # don't have to split after part is < 100 bp
+        if len(max(self.gg_parts, key=len)) <= 100:
             return
         else:
             old_max_len = len(max(self.gg_parts, key=len))
             new_gg_parts = []
+
+            # split each part into 2 subparts of half size
             for gg_part in self.gg_parts:
                 gg_half_1, gg_half_2 = gg_part[:len(gg_part)//2], gg_part[len(gg_part)//2:]
 
+                # if subpart is less than minimum part size, join subparts
+                # back together to prevent violation of golden gate
                 if len(gg_half_2) < 22: #22 is minimum part size
                     new_gg_parts.append(str(gg_half_1 + gg_half_2))
                 else:
@@ -188,6 +223,7 @@ class Sequence:
             self.gg_parts = new_gg_parts
             new_gg_parts = []
 
+            # if overhang violation exists between parts, join parts together
             if len(self.gg_parts) > 1:
                 seen = dict()
                 for i in range(len(self.gg_parts)):
@@ -210,6 +246,8 @@ class Sequence:
         num_parts = 5
         size_range = range(500, 32000)
 
+        # assign number of parts allowed based on
+        # length of sequence
         if len(self.name) < 500:
             self.turn_time[2] = float('inf')
             self.assembly_cost[2] = float('inf')
@@ -225,9 +263,12 @@ class Sequence:
             num_parts = 3
         elif len(self.name) < 2500:
             num_parts = 4
-        elif len(self.name < 30000):
+        elif len(self.name < 32000):
             num_parts = 5
 
+        # randomly split sequence into parts of different sizes,
+        # pick best set of parts based on least amount of secondary
+        # structure
         best_parts = []
         best_sec_struct_score = float('inf')
         for i in range(100):
@@ -255,6 +296,9 @@ class Sequence:
             temp_fail = 0
             sec_struct_score = 0
             for curr_part in curr_parts:
+                # don't allow parts to be created for gibson if
+                # their melting temperatures are < 50 (creates
+                # complications for gibson)
                 if MeltingTemp.Tm_Wallace(Seq(curr_part)) < 50:
                     temp_fail = 1
                     break
@@ -275,15 +319,23 @@ class Sequence:
             self.assembly_cost[2] = float('inf')
             return
 
+        # 1-stage gibson assembly has time penalty of 80 hours
         self.turn_time[2] = 80
+
+        # cost penalty for increasing difficulties if secondary structures
+        # are more prevalent
+        self.assembly_cost[2] = self.assembly_cost[2] + 0.01 * best_sec_struct_score
+
+        # charge extra for dna synthesis of remnants from scratch ($0.1 per bp), add time
+        # penalty of 1 hr for dna synthesis of each part from scratch
         for curr_part in self.gibson_parts:
-            self.turn_time[2] = self.turn_time[2] + 1 * len(curr_part)
-            self.assembly_cost[2] = self.assembly_cost[2] + 0.01 * len(curr_part)
+            self.turn_time[2] = self.turn_time[2] + 1
+            self.assembly_cost[2] = self.assembly_cost[2] + 0.1 * len(curr_part)
 
 
 
 
-
+    # return best assembly method, its cost, and its turnaround time
     def get_best_assembly_method(self):
         min_assembly_cost = min(self.assembly_cost)
         min_assembly_index = self.assembly_cost.index(min_assembly_cost)

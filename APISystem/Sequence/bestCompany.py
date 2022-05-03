@@ -53,7 +53,7 @@ def AllCompany(Sequence,Companies):
         else:
             currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScoree=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
 
-        currentPrice=currentPrice+min_assembly_cost;
+        #currentPrice=currentPrice+min_assembly_cost;
         value = {
             "CompanyName":company.CompanyName,
             "Price" : currentPrice,
@@ -64,7 +64,11 @@ def AllCompany(Sequence,Companies):
             "overFoldingScore":overFoldingScore
             }
         list.append(value)
-
+        for x in range(len(Sequence.assembly_cost)):
+            if(Sequence.assembly_cost[x]==float('inf')):
+                Sequence.assembly_cost[x]=0.0
+            if(Sequence.turn_time[x]==float('inf')):
+                Sequence.turn_time[x]=0.0
         parts={
             "BBParts": Sequence.bb_parts,
             "BBCost":  Sequence.assembly_cost[0],

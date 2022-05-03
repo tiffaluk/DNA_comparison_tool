@@ -37,5 +37,6 @@ def companyAPI(request,id=0):
         user_data=JSONParser().parse(request)
         currentSequence=Sequence(user_data['Sequence'],user_data['Type'])
         company=AllCompany(currentSequence,companies)
+        print(json.loads(company))
         return JsonResponse(json.loads(company), safe=False)
 # Create your views here.
