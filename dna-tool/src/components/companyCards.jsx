@@ -93,7 +93,7 @@ class CompanyCards extends Component {
                 var c=JSON.parse(localStorage.getItem("prices"));
                 for (let step = 0; step < 4; step++) {
                   this.state.companies[step].assembly=c[0].Best_Assembly;
-                  this.state.companies[step].time="5 Days";
+                  this.state.companies[step].time=c[0].Turn_time;
                   this.state.companies[step].pricebp=this.state.users[step].Price_Per_BP;
                   var bestPrice=Math.pow(10, 1000); //
                   var bestCompanyName="";

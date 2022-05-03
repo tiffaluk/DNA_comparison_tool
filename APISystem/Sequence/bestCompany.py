@@ -53,7 +53,7 @@ def AllCompany(Sequence,Companies):
         else:
             currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScoree=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
 
-        #currentPrice=currentPrice+min_assembly_cost;
+        currentPrice=currentPrice+min_assembly_cost;
         value = {
             "CompanyName":company.CompanyName,
             "Price" : currentPrice,

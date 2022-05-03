@@ -119,7 +119,7 @@ class CompanyCard extends Component {
               <label id="price"></label>
             </p>
             <p>
-              {"Turn Around Time: " + this.state.time}
+              {"Turn Around Time (Days): " + this.state.time}
               <label id="turnaroundTime"></label>
             </p>
             <p>
