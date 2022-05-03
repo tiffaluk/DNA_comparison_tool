@@ -40,7 +40,8 @@ class AssemblyCards extends Component {
 
 componentDidMount(props) {
     var c=JSON.parse(localStorage.getItem("prices"));
-    var d=c[4];
+    var d=c[5];
+    console.log(c);
     var test=[
     {
       name: "BioBricks",
