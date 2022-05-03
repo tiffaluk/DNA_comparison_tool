@@ -41,7 +41,7 @@ class AssemblyCards extends Component {
 componentDidMount(props) {
     var c=JSON.parse(localStorage.getItem("prices"));
     var d=c[5];
-    console.log(c);
+  //update the state of the assembly cards to match the actual output of each individual assembly methods
     var test=[
     {
       name: "BioBricks",

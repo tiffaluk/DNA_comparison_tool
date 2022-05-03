@@ -29,14 +29,16 @@ def companyAPI(request,id=0):
             companies_serializer.save()
             return JsonResponse("Added Succesfully",safe=False)
         return JsonResponse("Failed to Add",safe=False)
+
     elif request.method=='DELETE':
-        # company=Company.objects.get(CompanyName=name)
-        # company.delete()
-        # return JsonResponse("Delete Company", safe=False)
+        #takes all companies from database
         companies = Company.objects.all()
+        #grab user input
         user_data=JSONParser().parse(request)
+        #create a new sequence object from user input
         currentSequence=Sequence(user_data['Sequence'],user_data['Type'])
+        #find best company
         company=AllCompany(currentSequence,companies)
-        print(json.loads(company))
+        #return company as a json response
         return JsonResponse(json.loads(company), safe=False)
 # Create your views here.

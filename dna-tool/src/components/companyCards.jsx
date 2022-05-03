@@ -87,9 +87,8 @@ class CompanyCards extends Component {
                     users: json,
                     DataisLoaded: true
                 });
-
+                //create a for loop that personally allocate each state into the specific object from the output
                 var c=JSON.parse(localStorage.getItem("prices"));
-                console.log(c);
                 for (let step = 0; step < 4; step++) {
                   this.state.companies[step].assembly=c[0].Best_Assembly;
                   this.state.companies[step].time=c[0].Turn_time;
@@ -121,7 +120,7 @@ class CompanyCards extends Component {
                       this.state.companies[step].costpenalty="Can't be synthesized"
                   }
                   else{
-  
+
                       this.state.companies[step].price=c[index].Price;
                       this.state.companies[step].costpenalty=(c[index].Price/c[0].SequenceLength)-this.state.users[step].Price_Per_BP
                   }

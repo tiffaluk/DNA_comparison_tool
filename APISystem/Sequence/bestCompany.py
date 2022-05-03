@@ -6,6 +6,7 @@ class DecimalEncoder(json.JSONEncoder):
     if isinstance(obj, Decimal):
       return str(obj)
     return json.JSONEncoder.default(self, obj)
+#did not use
 def BestCompany(Sequence,Companies):
     bestPrice = float('inf')
     bestCompany=""
@@ -33,6 +34,7 @@ def AllCompany(Sequence,Companies):
     Sequence.get_gc_content()
     Sequence.get_folding_score()
     assembly_method, min_assembly_cost,turntime=Sequence.get_best_assembly_method()
+    #create an object with the sequence length, gc content, folding score, best assembly, and turn time to be put in list
     test={
         "SequenceLength": len(Sequence.name),
         "GC_Content":Sequence.gc_content,
@@ -41,6 +43,7 @@ def AllCompany(Sequence,Companies):
         "Turn_time":turntime
     }
     list.append(test)
+    #check the price of each company and add an object to list
     for company in Companies.iterator():
         overLengthThreshold=False
         overLengthMax=False
@@ -54,6 +57,7 @@ def AllCompany(Sequence,Companies):
             currentPrice,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScoree=PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore)
 
         #currentPrice=currentPrice+min_assembly_cost;
+        #object to be added to list
         value = {
             "CompanyName":company.CompanyName,
             "Price" : currentPrice,
@@ -69,6 +73,7 @@ def AllCompany(Sequence,Companies):
                 Sequence.assembly_cost[x]=0.0
             if(Sequence.turn_time[x]==float('inf')):
                 Sequence.turn_time[x]=0.0
+    #create a customized object of all asssembly parts, cost, and time to be added to list
     parts={
         "BBParts": Sequence.bb_parts,
         "BBCost":  Sequence.assembly_cost[0],
@@ -81,6 +86,7 @@ def AllCompany(Sequence,Companies):
         "GGtime":Sequence.turn_time[1]
         }
     list.append(parts)
+    #return list as json file
     return json.dumps(list,cls=DecimalEncoder)
 
 def PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore):
@@ -92,24 +98,31 @@ def PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max
 
     homology_score=Sequence.fold_score
     price=company.Price_Per_BP
+    #check the length of sequence compare to the company requires
     if((lengthofsequence>company.BP_Length_Maximum) or (lengthofsequence<company.BP_Length_Minimum)):
+        #if the sequence is over max or under min, then just return price=-1 as sequence can't be synthesize
         price=-1
         overLengthMax=True
         return price,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore
     elif ((lengthofsequence>company.BP_Length_Threshold) and (lengthofsequence<company.BP_Length_Maximum)):
+        #if the sequence is over threshold but under max, then add price to orignal base pair price
         overLengthThreshold=True
         price=price+company.BP_Length_PriceIncrease
     if(gc_content>company.GC_Content_Maximum):
+        #if sequence gc content is over the maximum, then return -1 as unable to synthesize
         price=-1
         overGC_Max=True
         return price,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore
     elif ((gc_content>company.GC_Content_Threshold) and (gc_content<company.GC_Content_Maximum)):
+        #if sequence gc content is over threshold but undermax, add price to oringal price
         overGC_Content=True
         price=price+company.GC_Content_PriceIncrease
     if(homology_score>company.Homology_Threshold):
+        # if fold score is over threshold, add price to original price
         overFoldingScore=True
         price=price+company.Homology_PriceIncrease
     if(Sequence.type=="dsDNA"):
+        #if type is dsdna, then add price
         price=price+company.Double_Stranded_Price_Increase
     price=price*lengthofsequence
     return price,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore

@@ -1,12 +1,11 @@
 import React, { useEffect, useState, Component } from "react";
 import { useNavigate } from "react-router-dom";
-
+//this function is to check if there's anything that is not AGTCU to error check user input
 function renderSequence(sequence,type) {
   {
     if(type=="Amino Acids"){
       sequence=convertAA(sequence);
     }
-    console.log(sequence);
      sequence=sequence.toUpperCase();
      for( let i=0;i<sequence.length;i++){
         if ((sequence[i] !="G") &&(sequence[i] !="A") &&(sequence[i] !="T") &&(sequence[i] !="C") && (sequence[i]!="U")) {
@@ -17,6 +16,7 @@ function renderSequence(sequence,type) {
      return true;
   }
 }
+//function to convert evert AA into DNA
 function convertAA(sequence){
   sequence=sequence.toUpperCase();
   var newsequence="";
@@ -88,6 +88,7 @@ function convertAA(sequence){
   }
   return newsequence;
 }
+//function to convert RNA to DNA
 function convertRNA(sequence){
   sequence=sequence.toUpperCase();
   var newsequence="";
@@ -105,6 +106,7 @@ function convertRNA(sequence){
 function Button(props) {
   //   state = {};
   //   render() {
+  //Error message if user input wrong type
   const falseSequence = async () => {
      var a={
        CompanyName: "Input has Error! Please Resubmit!",
@@ -138,7 +140,7 @@ function Button(props) {
          Type: props.inType,
        });
   }
-
+    //Fetch the data and request ("DELETE") and put it in response.json()
      var head = { "Content-Type": "application/json" };
 
      const getApiData = async () => {
@@ -151,6 +153,7 @@ function Button(props) {
        const bestIndex=0;
        var bestPrice=Math.pow(10, 1000); //
        var a=d[0];
+       //find the best company
        for (let step = 0; step < 4; step++) {
          if(d[step].Price<bestPrice){
            if(d[step].Price>0){
@@ -159,6 +162,7 @@ function Button(props) {
            }
          }
        }
+       //add additional content to the object to be put into front end
        a={
          ...a,
          "AssemblyMethod":d[0].Best_Assembly,
@@ -167,7 +171,7 @@ function Button(props) {
          "gc":d[0].GC_Content,
          "foldscore":d[0].Folding_Score,
        }
-
+       //save the output of all companies into the local storage
        localStorage.setItem("prices",JSON.stringify(d));
        props.onSubmit(a);
      };
@@ -183,7 +187,7 @@ function Button(props) {
         type="submit"
         className="submitButton"
         onClick={() => {
-
+          //check if the input sequence is actual real or if its faked
           if(renderSequence(props.inSeq,props.inType)==false){
             falseSequence();
           }
