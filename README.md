@@ -11,7 +11,7 @@
     conda activate newenv
     pip install -r requirements.txt  
         
-	https://github.com/vianabar/be552-hw1.git
+	https://github.com/tiffaluk/DNA_comparison_tool
 
 3. How to use:
 
