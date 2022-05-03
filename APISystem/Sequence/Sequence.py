@@ -208,72 +208,78 @@ class Sequence:
     def get_gibson_parts(self):
         #parts can be 500 bp to 32 kb long
         num_parts = 5
-
-
-        '''
-        if len(self.name) < 500:
-            self.turn_time = float('inf')
-            self.assembly_cost = float('inf')
-        elif len(self.name) < 1000:
-            self.gibson_parts = self.name
-            self.turn_time = 30
-            self.assembly_cost
-        elif len(self.name) < 1500:
-            num_parts =
-        '''
-
-        self.gibson_parts = [self.name[i:i+num_parts] for i in range(0, len(self.name), num_parts)]
-        self.turn_time[2] = 80 + 30 * len(self.gibson_parts)
-        
-        self.turn_time[2] = 80
-        self.assembly_cost[2] = 30*len(self.gibson_parts)
-
-    '''
-    def get_gibson_parts_(self):
-        #parts can be 500 bp to 32 kb long
-        num_parts = 5
         size_range = range(500, 32000)
 
         if len(self.name) < 500:
-            self.turn_time = float('inf')
+            self.turn_time[2] = float('inf')
             self.assembly_cost[2] = float('inf')
+            return
         elif len(self.name) < 1000:
             self.gibson_parts = self.name
-            self.turn_time = 30
-            self.assembly_cost[2] = 30
+            self.turn_time[2] = 1 * len(self.name)
+            self.assembly_cost[2] = 0.01 * len(self.name)
+            return
         elif len(self.name) < 1500:
             num_parts = 2
-            size_range = range(500, len(self.name) / 2)
         elif len(self.name) < 2000:
             num_parts = 3
-            size_range = range(500, len(self.name) / 3)
         elif len(self.name) < 2500:
             num_parts = 4
-            size_range = range(500, len(self.name) / 4)
         elif len(self.name < 30000):
             num_parts = 5
-            size_range = range(len(500, len(self.name) / 5))
 
-        curr_parts = []
-        curr_point = 0
-        for i in range(len(num_parts-1)):
-            random_point = random.choice(size_range)
-            curr_parts.append(self.name[curr_point:curr_point + random_point])
-            curr_point = curr_point + random_point
+        best_parts = []
+        best_sec_struct_score = float('inf')
+        for i in range(100):
+            curr_parts = []
+            curr_point = 0
+            for j in range(num_parts-1):
+                random_point = random.randint(500, len(self.name) // num_parts)
+                curr_parts.append(self.name[curr_point:curr_point + random_point])
+                curr_point = curr_point + random_point
 
-        curr_parts.append(self.name[curr_point:])
-        
+            curr_parts.append(self.name[curr_point:])
 
-        for curr_part in curr_parts:
-            curr_part_temp = 
+            new_curr_parts = []
+            if len(curr_parts) > 1:
+                seen = dict()
+                for i in range(len(curr_parts)):
+                    overhang = curr_parts[i][0:40]
+                    if overhang in seen:
+                        new_curr_parts[-1] = new_curr_parts[-1] + str(curr_parts[i])
+                    else:
+                        new_curr_parts.append(curr_parts[i])
+                        seen[overhang] = i
+            curr_parts = new_curr_parts
 
+            temp_fail = 0
+            sec_struct_score = 0
+            for curr_part in curr_parts:
+                if MeltingTemp.Tm_Wallace(Seq(curr_part)) < 50:
+                    temp_fail = 1
+                    break
+                else:
+                    analyzed_curr_part = ProteinAnalysis(curr_part)
+                    helix_perc, turn_perc, sheet_perc = analyzed_curr_part.secondary_structure_fraction()
+                    sec_struct_score = sec_struct_score + helix_perc + turn_perc + sheet_perc
 
-        self.turn_time[2] = 80 + 30 * len(self.gibson_parts)
-        
-        self.turn_time[2] = 80  
-        self.assembly_cost[2] = 30*len(self.gibson_parts)
-    '''
-    
+            if len(best_parts) == 0 and temp_fail == 0:
+                best_parts = curr_parts
+            elif sec_struct_score < best_sec_struct_score and temp_fail == 0:
+                best_parts = curr_parts
+
+        self.gibson_parts = best_parts
+
+        if len(self.gibson_parts) == 0:
+            self.turn_time = float('inf')
+            self.assembly_cost[2] = float('inf')
+            return
+
+        self.turn_time[2] = 80
+        for curr_part in self.gibson_parts:
+            self.turn_time[2] = self.turn_time[2] + 1 * len(curr_part)
+            self.assembly_cost[2] = self.assembly_cost[2] + 0.01 * len(curr_part)
+
 
 
 
@@ -284,17 +290,6 @@ class Sequence:
 
         min_turn_time = min(self.turn_time)
         min_turn_index = self.turn_time.index(min_turn_time)
-<<<<<<< Updated upstream
-        assembly_method_index=1
-        assembly_method=""
-=======
-        # if min_turn_index == 0:
-        #     turn_method = "BioBrick"
-        # elif min_turn_index == 1:
-        #     turn_method = "GoldenGate"
-        # elif min_turn_index == 2:
-        #     turn_method = "Gibson"
->>>>>>> Stashed changes
         if min_assembly_index == 0:
             assembly_method = "BioBrick"
         elif min_assembly_index == 1:
@@ -302,4 +297,4 @@ class Sequence:
         elif min_assembly_index == 2:
             assembly_method = "Gibson"
 
-        return assembly_method, min_assembly_cost
+        return assembly_method, min_assembly_cost, self.turn_time[min_assembly_index]

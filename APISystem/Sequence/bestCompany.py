@@ -32,13 +32,13 @@ def AllCompany(Sequence,Companies):
     list=[]
     Sequence.get_gc_content()
     Sequence.get_folding_score()
-    assembly_method, min_assembly_cost=Sequence.get_best_assembly_method()
-    print(Sequence.gg_parts)
+    assembly_method, min_assembly_cost,turntime=Sequence.get_best_assembly_method()
     test={
         "SequenceLength": len(Sequence.name),
         "GC_Content":Sequence.gc_content,
         "Folding_Score":Sequence.fold_score,
-        "Best_Assembly":assembly_method
+        "Best_Assembly":assembly_method,
+        "Turn_time":turntime
     }
     list.append(test)
     for company in Companies.iterator():
@@ -76,7 +76,6 @@ def AllCompany(Sequence,Companies):
             "GGCosts":Sequence.assembly_cost[1],
             "GGtime":Sequence.turn_time[1]
         }
-        print(parts)
     return json.dumps(list,cls=DecimalEncoder)
 
 def PriceofCompany(Sequence,company,overLengthThreshold,overLengthMax,overGC_Max,overGC_Content,overFoldingScore):

@@ -12,7 +12,7 @@ class ResultsBox extends Component {
         <div className="results-box">
           <h3 id="CompanyName">{"Company: " + this.props.users.CompanyName}</h3>
           <h3>{"Price:$ " + this.props.users.Price.toFixed(2)}</h3>
-          <h3>Turnaround time: 5 Days</h3>
+          <h3>{"Turnaround time:" + this.props.users.turntime}</h3>
           <h3>{"Assembly method: " + this.props.users.AssemblyMethod}</h3>
         </div>
       </div>

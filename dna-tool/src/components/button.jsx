@@ -162,6 +162,7 @@ function Button(props) {
        a={
          ...a,
          "AssemblyMethod":d[0].Best_Assembly,
+         "turntime":d[0].Turn_time
        }
 
        localStorage.setItem("prices",JSON.stringify(d));
